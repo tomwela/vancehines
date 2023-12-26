@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <title>Authorization</title>    
+    <style type="text/css">
+      .main{margin:0 auto;width:955px;}
+      .auth{margin:90px auto 0;position:relative;width:480px;}
+      .frm_login{margin:0 auto;position:relative;width:285px;}
+      .row{float:left;padding:7px 0 4px 5px;width:100%;}
+      .row label{color:#363636;display:block;font-size:12px;font-weight:bold;padding:0 0 9px;}
+      .inp{border:1px solid #A5A5A5;float:left;padding:4px 0 5px 5px;vertical-align:middle;width:240px;}
+    </style>
+  </head> 
+  <body>
+    <div class="main">
+    <div class="auth">
+      <div class="frm_login">
+        <form action="<?=$_SERVER['REQUEST_URI']?>" method="POST" name="frm_auth">
+        <div class="row mt11 w410">
+          <label>User Name</label>
+          <input class="inp" type="text" name="login" id="login" />
+        </div>
+        <div class="row mt7 w410">
+          <label>Password</label>
+          <input class="inp" type="password" name="password" id="password" />
+        </div>
+        <div class="row mt3" style="width:100%">
+          <div class="row w428 mt3">
+            <div class="button-gray mt5" onclick="login()">
+              <input type="submit" value="Login"/>
+            </div>
+          </div>
+      
+        </div>
+        </form>  
+      </div>
+    </div>
+  </body>
+</html>

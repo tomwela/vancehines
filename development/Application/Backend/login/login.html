@@ -1,0 +1,58 @@
+<body id="page" class="login-page">
+
+<!--[if lt IE 8]>
+<p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+    your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a>
+    to improve your experience.</p>
+<![endif]-->
+
+<!-- Add your site or application content here -->
+
+<section class="main">
+    <div class="data-block">
+        <form class="form-signin">
+          <login id="login" login="email" password="password" button="btnLogin" field="userID" callBack="ClickBlocks\DB\OrchestraUsers->login" redirect="<?=$config->cms;?>/map/queue" namespace="__VH__">
+
+            <div class="head-block">
+              <figure class="logo">
+                <img src="/Application/_includes/img/vhlogo.png" width="126" height="35"/>
+              </figure>
+            </div>
+            <div class="inputs-row">
+              <textbox id="email" name='email' class="input-block-level" placeholder="Example@email.com" onkeyup="return login(event);"/>
+              <textbox id="password" type="password" class="input-block-level loginPress" placeholder="Password" onkeyup="return login(event);"/>
+                <a href="<?=$config->cms;?>/forgot" class="forgot-pas">Forgot Password?</a>
+                <div class="clearfix"></div>
+                <validatorrequired tag="div" id="valEmail" controls="email" order="0" hiding="1" client="1" groups="login" class="login-error float-right mt78">Email is empty</validatorrequired>
+                <validatoremail tag="div" id="valEmailFormat" controls="email" order="1" hiding="1" client="1" groups="login" class="login-error float-right mt78">Email format is incorrect</validatoremail>
+                <validatorrequired tag="div" id="valPassword" controls="password" order="2" hiding="1" client="1" groups="login" class="login-error float-right mt78">Password is empty</validatorrequired>
+                <validatorcustom tag="div" id="valCustom" hiding="1" serverFunction="->check" groups="login" class="login-error float-right mt78">Email or Password are incorrect</validatorcustom>
+            </div>
+            <button id="btnLogin" class="btn-large blue" type="button" onclick="$('.login-error').hide();if (validators.validate('login', 'error', '',false)) ajax.doit('\\ClickBlocks\\Web\\UI\\POM\\Login@login->login');">Login</button>
+          </login> 
+        </form>
+    </div>
+</section>
+<footer>
+    <div class="data-block">
+      2013 - <?php echo date("Y"); ?>. Vance &amp; Hines. All Rights Reserved.<span class="fr">GCID: <?php echo strtoupper(shell_exec('git rev-parse --short HEAD')); ?></span>
+    </div>
+</footer>
+<script type="text/javascript"><![CDATA[
+  function login(e){
+    if (e.which == 13 || e.keyCode == 13) {
+      $('#btnLogin').click();
+    }
+  }
+]]></script>
+<script>	
+  $(document).ready(function(){
+    $("input[name^='email']").blur(function(){ 
+      var email=$(this).val();
+      if ( (! email.match(/@/)) && (email.length>0) ) {
+        $(this).val( email + "@vanceandhines.com");
+      }
+    });// blur
+  });//doc ready
+</script>
+</body>

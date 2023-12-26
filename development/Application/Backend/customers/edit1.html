@@ -1,0 +1,209 @@
+<panel id="mainform" masterpage="<?=\ClickBlocks\Core\IO::dir('backend');?>/common/general.html">
+        <a href="javascript:void(0)" class="blue-link">&lt; back</a>
+        <div class="clearfix">
+            <h2 class="page-title mt20">Customer Details (#<?=$customerID;?>)</h2>
+            <a class="blue-link" href="javascript:void(0)">edit</a>
+        </div>
+		
+	   <div class="gray-container">
+            <table>
+                <tr>
+                    <td>
+                         <b>Name</b>
+                    </td>
+                    <td>
+                        <?=$fullName;?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>Address</b>
+                    </td>
+                    <td>
+                        <?=$address;?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>Phone</b>
+                    </td>
+                    <td>
+                        <?=$phone;?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>Email</b>
+                    </td>
+                    <td>
+                        <?=$email;?>
+                    </td>
+                </tr>
+            </table>
+            <table>
+                <tr>
+                    <td>
+                        <b>Make</b>
+                    </td>
+                    <td>
+                        <?=$make;?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>Model</b>
+                    </td>
+                    <td>
+                        <?=$model;?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>Year</b>
+                    </td>
+                    <td>
+                        <?=$year;?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>VIN#</b>
+                    </td>
+                    <td>
+                        <?=$vin;?>
+                    </td>
+                </tr>
+            </table>
+            <table class="mr0">
+                <tr>
+                    <td>
+                        <b>ECM Firmware</b>
+                    </td>
+                    <td>
+                        <?=$ecmFirmware;?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>ECM Part #</b>
+                    </td>
+                    <td>
+                        <?=$ecmPart;?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>Firmware Version</b>
+                    </td>
+                    <td>
+                        <?=$fVersion;?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>Hardware Version</b>
+                    </td>
+                    <td>
+                        <?=$hVersion;?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>App Version</b>
+                    </td>
+                    <td>
+                        <?=$aVersion;?>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="tabBox">
+            <ul class="tabs-list">
+                <li class="active"><a href="#">Current Map</a></li>
+                <li><a href="#">Other Maps</a></li>
+                <li><a href="#">Live Data</a></li>
+                <li><a href="#">CSR History</a></li>
+            </ul>
+        </div>
+
+        <div class="panel-control clearfix">
+            <h2>Sunday Cruz Map</h2>
+            <a href="javascript:void(0)" class="blue-link">edit</a>
+            <div class="fr">
+                <button class="btn-small black">Notes</button>
+                <button class="btn-small black ml10">Send Map</button>
+            </div>
+            <div class="description-block">
+                <label>Description</label>
+                <span>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aliquam interdum pulvinar nibh. Maecenas eget nunc in justo rhoncus aliquam.</span>
+            </div>
+        </div>
+
+        <table class="tbl_info">
+            <tr>
+                <th>MAP TABLES</th>
+                <th width="190" class="gray">LAST UPDATED</th>
+            </tr>
+            <tr>
+                <td>
+                    <a href="javascript:void(0)">Engine Displacement</a>
+                </td>
+                <td class="gray">11/12/2012</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="javascript:void(0)">IAC Warmup Steps</a>
+                </td>
+                <td class="gray">11/12/2012</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="javascript:void(0)">Idle RPM</a>
+                </td>
+                <td class="gray">11/12/2012</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="javascript:void(0)">VE Front Cyl</a>
+                </td>
+                <td class="gray">11/12/2012</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="javascript:void(0)">VE Rear Cyl</a>
+                </td>
+                <td class="gray">11/12/2012</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="javascript:void(0)">EITMS off Temperature</a>
+                </td>
+                <td class="gray">11/12/2012</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="javascript:void(0)">EITMS on Temperature</a>
+                </td>
+                <td class="gray">11/12/2012</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="javascript:void(0)">Acceleration Enrichment</a>
+                </td>
+                <td class="gray">11/12/2012</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="javascript:void(0)">Map Tables</a>
+                </td>
+                <td class="gray">11/12/2012</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="javascript:void(0)">Air-Fuel Ratio</a>
+                </td>
+                <td class="gray">11/12/2012</td>
+            </tr>
+        </table>
+</panel>

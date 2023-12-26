@@ -1,0 +1,272 @@
+<panel id="mainform" masterpage="<?=\ClickBlocks\Core\IO::dir('backend');?>/common/general.html">
+        <a href="/admin/customers?customerID=<?=$customerID;?>" class="blue-link">&lt; back</a>
+        <div class="clearfix">
+            <h2 class="page-title mt20">Compare</h2>
+        </div>
+        <panel id="customerDetail" tag="div" class="gray-container">
+          <panel id="customerDetailDisplay" tag="div">
+            <table>
+                <tr>
+                    <td>
+                        <b>Make</b>
+                    </td>
+                    <td>
+                        <textlabel id="customerMakeLabel"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>Model</b>
+                    </td>
+                    <td>
+                        <textlabel id="customerModelLabel"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>Year</b>
+                    </td>
+                    <td>
+                        <textlabel id="customerYearLabel"/>
+                    </td>
+                </tr>
+            </table>
+          </panel>
+    	</panel>
+
+        <div class="tabBox">
+            <ul class="tabs-list">
+                <li id="currentMap" class="active"><a href="javascript:void(0);">Current Map</a></li>
+                <li id="compareTo"><a href="javascript:void(0);">Compare To</a></li>
+                <li id="crossReference"><a href="javascript:void(0);">Cross Reference</a></li>
+            </ul>
+        </div>       
+
+  <panel tag="div" id="CurrentMap" class="panel-corners t_switch">
+    <div class="panel-control clearfix">
+      <h2><?=$mapName;?> <i class="checked"></i></h2>
+    </div> 
+    <?if($dataType == 'flat') {?>       
+    <div class="graph-table-wrapper ml5">
+      <div class="title-for-table"><?=$mapDataTitle?> = <?=$mapDataValue?></div>
+    </div>
+    <? }elseif($dataType == 'table') {?>
+    <div class="graph-table-wrapper ml5">
+      <div class="title-for-table"><?=$mapDataTitle?></div>
+      <table class="graph-table">
+      <tr>
+        <th><strong>C°</strong></th>
+        <th><strong><?=$Steps?></strong></th>
+      </tr>
+        <? foreach($rows as $key => $value){ ?>
+      <tr>
+        <td>
+          <?= $key; ?>
+        </td>
+        <td>
+          <?=$value;?>
+        </td>
+      </tr>
+      <? } ?>
+      </table> 
+    </div>
+    <?} elseif ($dataType == 'matrix') {?>
+    <div class="graph-table-wrapper ml25">
+      <div class="title-for-table"><?=$mapDataTitle?></div>
+      <? if ($mapDataTitle == 'Throttle Progressivity') { ?>
+        <div class="desc-for-table top bold">Twist Grip Position</div>
+      <? } else { ?>
+        <div class="desc-for-table top bold">Throttle Position</div>
+      <? } ?>
+      <table class="graph-table">
+        <tr>
+          <th>&nbsp;</th>
+          <?foreach($arrMatrixCol as $col){?>
+          <th><?=$col;?></th>
+          <?}?>
+        </tr>
+        <?
+        foreach($arrMatrixRow as $row){ ?>
+          <tr>
+            <td><?=$row?></td>
+          <? foreach($arrMatrixCol as $col){ ?>
+            <td onclick="showSSInputData(this);">
+              <input type="hidden" name="mapSSInputKeys_<?=$col;?>[]" value="<?= $row; ?>"/>
+              <span class="ssInputDataDisplay">
+                <? if($rows[$col][$row] != '')?>
+                <?= $rows[$col][$row]; ?>
+              </span>
+              <input name="mapSSInputValues_<?=$col;?>[]" value="<?= $rows[$col][$row]; ?>" oldvalue="<?= $rows[$col][$row]; ?>" type="text" onkeyup="this.value = this.value.replace(/[^0-9]/g,'');" class="ssInputData" style="display:none;" onblur="hideSSInputData(this);"/>
+            </td>
+          <? } ?>
+          </tr>
+        <? } ?>
+      </table>
+      <div class="desc-for-table bottom bold">RPM</div>
+
+      <? if ($mapDataTitle == 'Throttle Progressivity') { ?>
+      <br/>
+      <table class="graph-table">
+      <? if ($mapDataTitle == 'Throttle Progressivity') { ?>
+        <div class="desc-for-table top bold">Twist Grip Position</div>
+      <? } else { ?>
+        <div class="desc-for-table top bold">Throttle Position</div>
+      <? } ?>
+        <tr>
+          <th>&nbsp;</th>
+          <?foreach($arrMatrixColThrProg as $col){?>
+          <th><?=$col;?></th>
+          <?}?>
+        </tr>
+        <?
+        foreach($arrMatrixRowThrProg as $row){ ?>
+          <tr>
+            <td><?=$row?></td>
+          <? foreach($arrMatrixColThrProg as $col){ ?>
+            <td onclick="showSSInputData(this);">
+              <input type="hidden" name="mapSSInputKeys_<?=$col;?>[]" value="<?= $row; ?>"/>
+              <span class="ssInputDataDisplay">
+                <? if($rowsThrProg[$col][$row] != '')?>
+                <?= $rowsThrProg[$col][$row]; ?>
+              </span>
+              <input name="mapSSInputValues_<?=$col;?>[]" value="<?= $rowsThrProg[$col][$row]; ?>" oldvalue="<?= $rowsThrProg[$col][$row]; ?>" type="text" onkeyup="this.value = this.value.replace(/[^0-9]/g,'');" class="ssInputData" style="display:none;" onblur="hideSSInputData(this);"/>
+            </td>
+          <? } ?>
+          </tr>
+        <? } ?>
+      </table>
+      <div class="desc-for-table bottom bold">RPM</div>
+      <? } ?>
+      <div><hidden id="valKey"/></div>
+      <div><hidden id="valCols"/></div>
+      <div><hidden id="valColsThrProg"/></div>
+    </div>
+    <? } ?>
+  </panel>
+  <panel tag="div" id="CompareTo" style="display: none;" class="panel-corners t_switch">
+	  <widgetmapsearch id="mapSearch"  tag="div" template="<?=ClickBlocks\Core\IO::dir('widgets')?>/Backend/map/searchList.html"/>
+  </panel>
+  <panel tag="div" id="CrossReferense" style="display: none;" class="panel-corners t_switch">
+    <div class="panel-control clearfix">
+      <h2>Cross Reference</h2>
+    </div>
+    <?if($dataType == 'flat') {?>
+    <div class="graph-table-wrapper ml5">
+      <div class="title-for-table"><?=$mapDataTitle?> = <?=$referenceMap?></div>        
+    </div> 
+    <? }elseif($dataType == 'table') {?> 
+      <div class="graph-table-wrapper ml5">
+      <div class="title-for-table"><?=$mapDataTitle?></div>
+      <?if($ReferenceShow){?>
+      <table class="graph-table">
+      <tr>
+        <th>
+          <strong>C°</strong>
+        </th>
+        <th>
+          <strong><?=$Steps?></strong>
+        </th>
+      </tr>
+      <? foreach((array)$rowReference as $key => $valueReference){ ?>
+      <tr>
+        <td>
+          <?= $key; ?>
+        </td>
+        <td>
+          <?=$valueReference;?>
+        </td>
+      </tr>
+      <? } ?>
+      </table> 
+      <? } ?> 
+    </div>
+    <?} elseif ($dataType == 'matrix') {?>
+    <div class="graph-table-wrapper ml25">
+      <div class="title-for-table"><?=$mapDataTitle?></div>
+      <?if($ReferenceShow){?>
+      <? if ($mapDataTitle == 'Throttle Progressivity') { ?>
+        <div class="desc-for-table top bold">Twist Grip Position</div>
+      <? } else { ?>
+        <div class="desc-for-table top bold">Throttle Position</div>
+      <? } ?>   
+      <table class="graph-table">
+        <tr>
+          <th>&nbsp;</th>
+          <?foreach($arrMatrixCol as $col){?>
+          <th><?=$col;?></th>
+          <?}?>
+        </tr>
+        <?
+        foreach($arrMatrixRow as $row){ ?>
+          <tr>
+            <td><?=$row?></td>
+          <? foreach($arrMatrixCol as $col){ ?>
+            <td >
+              <input type="hidden" name="mapSSInputKeys_<?=$col;?>[]" value="<?= $row; ?>"/>
+              <span class="ssInputDataDisplay">
+                <? if($rowReference[$col][$row] > 0 ){?>+<?}?>
+                <?= $rowReference[$col][$row]; ?>
+              </span>
+              <input name="mapSSInputValues_<?=$col;?>[]" value="<?= $rowReference[$col][$row]; ?>" oldvalue="<?= $rowReference[$col][$row]; ?>" type="text" onkeyup="this.value = this.value.replace(/[^0-9]/g,'');" class="ssInputData" style="display:none;" onblur="hideSSInputData(this);"/>
+            </td>
+          <? } ?>
+          </tr>
+        <? } ?>
+      </table>
+      <div class="desc-for-table bottom bold">RPM</div>
+      
+      <? if ($mapDataTitle == 'Throttle Progressivity') { ?>
+      <br/>
+      <table class="graph-table">
+      <? if ($mapDataTitle == 'Throttle Progressivity') { ?>
+        <div class="desc-for-table top bold">Twist Grip Position</div>
+      <? } else { ?>
+        <div class="desc-for-table top bold">Throttle Position</div>
+      <? } ?>
+        <tr>
+          <th>&nbsp;</th>
+          <?foreach($arrMatrixColThrProg as $col){?>
+          <th><?=$col;?></th>
+          <?}?>
+        </tr>
+        <?
+        foreach($arrMatrixRowThrProg as $row){ ?>
+          <tr>
+            <td><?=$row?></td>
+          <? foreach($arrMatrixColThrProg as $col){ ?>
+            <td onclick="showSSInputData(this);">
+              <input type="hidden" name="mapSSInputKeys_<?=$col;?>[]" value="<?= $row; ?>"/>
+              <span class="ssInputDataDisplay">
+                <? if($rowReferenceThrProg[$col][$row] != '')?>
+                 <? if($rowReferenceThrProg[$col][$row] > 0 ){?>+<?}?>
+                  <?= $rowReferenceThrProg[$col][$row]; ?>
+              </span>
+              <input name="mapSSInputValues_<?=$col;?>[]" value="<?= $rowsReferenceThrProg[$col][$row]; ?>" oldvalue="<?= $rowsReferenceThrProg[$col][$row]; ?>" type="text" onkeyup="this.value = this.value.replace(/[^0-9]/g,'');" class="ssInputData" style="display:none;" onblur="hideSSInputData(this);"/>
+            </td>
+          <? } ?>
+          </tr>
+        <? } ?>
+      </table>
+      <div class="desc-for-table bottom bold">RPM</div>
+      <? } ?>
+      <div><hidden id="valKey"/></div>
+      <div><hidden id="valCols"/></div>
+      <div><hidden id="valColsThrProg"/></div>
+      <? } ?>
+    </div>
+    <? } ?>
+  </panel> 
+  <script><![CDATA[
+    $(document).ready(function(){
+      $(".tabBox ul li").bind("click", function(){
+        $(".tabBox ul li").removeClass("active");
+        $(this).addClass("active");
+        $(".t_switch").hide();
+        var index = $(this).index();
+        if(controls.isIE()) index = (index - 1)/2;
+         $(".t_switch:eq("+index+")").show();
+        ajax.doit('->updateTab',index);         
+      });
+    });
+  ]]></script>
+</panel>

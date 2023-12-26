@@ -1,0 +1,5 @@
+This is how to generate the db.xml file so it correctly matches the db.
+http://dev.vhfp3.com/development/Utilities/orm/generate.php?mode=xml
+
+If the db.xml file doesn't correctly match the database errors will occur
+while using the framework.

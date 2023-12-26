@@ -1,0 +1,20 @@
+<div class="data-block">
+  <span class="glyphicon glyphicon-remove" onclick="popup.hide('<?=ID('sendNote')?>')"></span>
+  <div class="clearfix"></div>
+  
+  <h2>Send Note To Customer</h2>
+  
+  <div><hidden id="customerID"/></div>
+  <!-- <div><hidden id="noteID"/></div> -->
+  <div class="data pt30">
+    <memo id="note" rows="15" cols="35" style="width:95%;"></memo>
+    <validatorrequired id="valNote" controls="note" hiding="1" client="1" groups="note" class="validation-text"/>
+  </div>
+  
+  <div class="clearfix mt5">
+    <button class="btn-small black" onclick="popup.hide('<?=ID('sendNote')?>')">Cancel</button>
+    <button class="btn-small black" onClick="ajax.doit('->saveCustomerNotes', ajax.getFormValues('<?=ID('sendNote')?>'));">
+      Send Note
+    </button>
+  </div>
+</div>

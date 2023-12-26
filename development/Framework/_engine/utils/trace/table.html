@@ -1,0 +1,59 @@
+    <? $un = uniqid(); ?>
+    <tr style="">
+      <td>
+        <?=$info;?>
+      </td>
+    </tr>
+
+    <!-- database statistic -->
+    <? foreach ((array)$db as $n => $row): ?>
+        <?$time = 0; foreach($row as $k => $r) $time+=$r['time'];?>
+        <tr style="">
+          <td>
+            <span style="color:#F9EE98; padding-right:5px">DB:</span>
+            <span style="padding:2px; background-color:#391414; color:#66C6D5; cursor:pointer;" onclick="controls.display('<?=$un.$n.'_DB';?>');"><?=$n?> (count: <?=count($row);?>) Time <?=number_format($time,6)?> s</span>
+            <div id="<?=$un.$n.'_DB';?>" style="display: none;">
+            <? foreach($row as $k => $r): ?>
+                <div style="padding: 5px;">
+                  <?
+                    switch(true)
+                    {
+                      case ($r['time'] > 1.00): $color = '#ff0000'; break;
+                      case ($r['time'] > 0.10): $color = '#b94a48'; break;
+                      case ($r['time'] > 0.05): $color = '#c09853'; break;
+                      case ($r['time'] > 0.01): $color = '#3a87ad'; break;
+                      default: $color = '#468847'; break;
+                    }
+                  ?>
+                  <span style="cursor: pointer; color:<?=$color;?>" onclick="controls.display('<?=$un.$n.'_'.$k;?>');">
+                    (<?=$r['time'];?>) <?=cut($r['sql'], 200)?> <?=json_encode($r['data'])?>
+                  </span>
+                  <pre id="<?=$un.$n.'_'.$k;?>" style="padding-left:30px; color:#F9EE98; display:none;"><?print_r($r)?></pre>
+                </div>
+            <? endforeach; ?>
+            </div>
+          </td>
+        </tr>
+    <? endforeach; ?>
+
+    <? foreach ($trace as $n => $row): ?>
+      <tr style="margin:10px">
+        <td>
+          <div style="">
+            <span style="color:#F9EE98; padding-right:5px" >LOG:</span>
+            <span style="padding:2px; background-color:#391414; color:#66C6D5; cursor: pointer;" onclick="controls.display('<?='custom_'.$un.$n;?>');"><?=$row['method']?></span>
+            <pre id="<?='custom_'.$un.$n;?>" style="padding-left:30px; color:#F9EE98; display:none;">
+<?=json($row['data']);?>
+
+
+<span style="padding:2px; background-color:#511; color:#6ce; cursor: pointer;" onclick="controls.display('<?='custom_stack_'.$un.$n;?>');">Stack:</span>
+<div id="<?='custom_stack_'.$un.$n;?>" style="padding-left:30px; color:#fea; display:none;">
+<?print_p($row['trace'])?>
+</div>
+            </pre>
+          </div>
+        </td>
+      </tr>
+    <? endforeach; ?>
+    
+    <tr><td>&nbsp;</td></tr>

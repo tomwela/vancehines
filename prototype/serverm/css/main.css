@@ -1,0 +1,19 @@
+.navbar{background-color: black; color: white  }
+.mainCon{margin-top : 85px;}
+.logo{ height: 50px; margin: 5px;}
+.okBody{background-color: gray}
+.ok{position: relative; background-color:white; font-size: 2em; margin-top:210px; padding:5px 0px; width: 320px; border-radius: 4px;}
+.bikeInfo{position: relative; margin-top: 110px;}
+.logouthead{margin-right: 120px; margin-top:15px;  }
+.logouthead a{color: white; font-size: 1.1em}
+
+
+.table > tbody > tr > td {
+     vertical-align: middle;
+     text-align: center; 
+}
+.table  th{
+     vertical-align: middle;
+     text-align: center; 
+}
+.bikeImg{ position:  relative; left: 30% }

@@ -1,0 +1,133 @@
+<style>
+.trace-panel .bottom.hide{height:0!important;}
+.trace-panel
+{
+  position:fixed; 
+  bottom:0; 
+  z-index: 10000; 
+  width:100%;
+  background:#333; opacity: 0.9;
+  padding:10px; 
+  box-sizing: border-box;
+  border-top:1px solid silver;
+  font-size: 10px!important;
+}
+.trace-panel .top
+{
+  height:64px;position relative;
+}
+.trace-panel .top:after { content:""; display:block; height:0; overflow:hidden; clear:both; }
+.trace-panel .top .trace-button
+{
+  position:absolute; 
+  top:0; 
+  right: 0; 
+  text-align: center; 
+  color:#ccc;
+  width:15px;
+  height:15px;
+  cursor:pointer;
+}
+.trace-panel      .top .trace-button.trace-toggle      {right: 20px}
+.trace-panel      .top .trace-button.trace-toggle:after{content:"[_]";}
+.trace-panel.open .top .trace-button.trace-toggle:after{content:"_";}
+.trace-panel      .top .trace-button.trace-close       {left: 0px; bottom:0px;}
+.trace-panel      .top .trace-button.trace-close:after {content:"x";}
+.trace-panel      .top .trace-button.trace-clear       {right: 0px;}
+.trace-panel      .top .trace-button.trace-clear:after {content:"x";}
+
+.trace-panel .bottom
+{
+  position: relative;
+  width:100%; 
+  height: 150px; 
+  overflow-x: hidden; 
+  overflow-y: auto;
+}
+.trace-panel .top .vsplit
+{
+  position: absolute;
+  top:0;
+  width: 100%;
+  height: 5px;
+  cursor: row-resize;
+}
+
+</style>
+<div id="trace-display" class="trace-panel">
+  <div class="top">
+    <div class="vsplit"></div>
+    <div class="trace-toggle trace-button" onclick="logTrace.toggle();"></div>
+    <div class="trace-close trace-button" onclick="$('#trace-display').hide();"></div>
+    <div class="trace-clear trace-button" onclick="$('#trace-table').html('');"></div>
+    <div style="float: left;">
+      <ul style="float: left;">
+        <li style="color:#c66">
+          Server: <span style="color:silver"><?=print_r($_SERVER['HTTP_HOST'], true);?></span>
+        </li>
+        <li style="color:#c66">
+          Client: <span style="color:silver"><?=print_r($_SERVER['HTTP_USER_AGENT'], true);?>
+        </span>
+      </li>
+      </ul>
+    </div>
+    <div id="sys-info" style="padding-left: 20px; float: left;">
+      <?=$info;?>
+    </div>
+  </div>
+
+  <div id="trace-log" class="bottom hide">
+    <table id="trace-table" style="margin-top:10px;">
+      <?=$table;?>
+    </table>
+  </div>
+
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+  $('body').height($('body').height()+$(".trace-panel").height());
+window.logTrace = 
+{
+  toggle:function()
+  {
+    controls.toggleClass('trace-log', 'hide');
+    controls.toggleClass('trace-display', 'open');
+  },
+
+  addRows:function(rows)
+  {
+    var el = document.createElement('tbody');
+    el.innerHTML = rows;
+    document.getElementById('trace-table').appendChild(el);
+  },
+
+  startResize: false,
+  mdown:function(e){
+    document.body.savedonselectstart = document.body.onselectstart;
+    document.body.onselectstart = function() {return false};
+    if($('#trace-log').hasClass('hide')) return;
+    logTrace.startResize = true;
+    $(window).mouseup(logTrace.mup).mouseover(logTrace.over);
+  },
+  mup: function(e)
+  {
+    logTrace.startResize = false;
+    document.body.onselectstart = document.body.savedonselectstart;
+    document.body.style.cursor = '';
+    $(window).unbind('mouseup').unbind('mouseover');
+  },
+  over:function(e)
+  {
+    if(logTrace.startResize)
+    {
+      e.target.ownerDocument.defaultView.getSelection().removeAllRanges()
+      document.body.style.cursor = 'row-resize';
+      var t = $(".trace-panel .top");
+      var newH = $(window).height() - event.clientY - 85;
+      $('#trace-log').height(newH);
+    }
+  }
+}
+  $(".vsplit").mousedown(logTrace.mdown);
+});
+</script>

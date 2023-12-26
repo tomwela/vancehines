@@ -1,0 +1,469 @@
+    <panel id="searchMapBlock" class="data-block mb15" visible="1">
+        <?if(!$otherMaps){?>
+        <h2 class="page-title">Map Search</h2>
+        <div class="clearfix">
+        <!--<ul class="radio-list ml5" style="float: left;">-->
+            <!--<li onclick="allMaps(event)">-->
+                <!--<div class="custom-radio checked" ></div>-->
+                <!--<label>All Maps</label>-->
+            <!--</li>-->
+            <!--<li  onclick="customMaps(event)">-->
+                <!--<div class="custom-radio"></div>-->
+                <!--<label>Customer Maps</label>-->
+            <!--</li>-->
+        <!--</ul>-->
+      </div>
+
+
+      <panel id="allMaps" visible="1">
+        <ul class="selects-filter-list">
+          <li>
+            <label>Exhaust Manufacturer:</label>
+            <customdropdownbox class="custom-select" id="exmanuf" style="width:215px" defaultValue="All"/>
+          </li>
+          <li>
+            <label>Exhaust Name:</label>
+            <customdropdownbox class="custom-select" id="exname" style="width:215px" defaultValue="All"/>
+          </li>
+          <li>
+            <label>Baffle Type:</label>
+            <customdropdownbox class="custom-select" id="baffletype" style="width:215px" defaultValue="All"/>
+          </li>
+          <li class="last">
+            <label>Engine Size:</label>
+            <customdropdownbox class="custom-select" id="enginesize" style="width:215px" defaultValue="All"/>
+          </li>
+        </ul>
+      </panel>
+
+
+
+        <panel tag="div" class="search-wrapper fr mt15" id="customerMaps" visible="1">
+            <small style="color: #C4C4C4;" class="text-uppercase">Fitment, Firmware, Year, Model </small>
+          <textbox id="txtSearch" class="gradient-bg search-input" title="Search" value="<?=$search?:'Search'?>" onclick="if(this.value=='Search')  this.value = '';" onblur="setTimeout(function(){this.value = 'Search';}, 100);" onkeypress="clickSearch(event);"/>
+          <hyperlink id="search" href="javascript:void(0);"><div class="search-icon"></div></hyperlink>
+        </panel>
+        <?} else {?>
+            <div class="panel-control clearfix">
+              <h2>Select a Map</h2>
+              <div class="fr">
+                <textbutton id="originalTuneButton" class="btn btn-primary btn-outline" value="Original Tune" onclick="ajax.doit('->restoreOriginalMap');"></textbutton>
+              </div>
+            </div><br />
+        <?}?>
+        <?if(!$rows) {?>
+            <div class="no-results-block clearfix">No Results</div>
+        <?} else {?>
+
+        <div class="panel-control pt0 clearfix">
+            <p class="showing">
+                <?=$from;?> - <?=$to;?> of <?=$count;?> | <span class="display">Display</span>
+            </p>&nbsp;
+            <customdropdownbox id="pageSize" options="php::array(10=>10,20=>20)" style="width:62px;"/>
+        </div>
+
+        <table class="tbl_info clearfix">
+          <?=$data; foreach ($rows as $k => $row){  ?>
+            <tr>
+                <td width="25"  class="<?=(abs($sortBy) == 1 ? 'gray': '');?>"><a onclick="ajax.doit('->showTablesOtherMap','<?=$row['mapID']?>');"><?=htmlspecialchars($row['mapID']);?></a></td>
+                <td width="50"  class="<?=(abs($sortBy) == 2 ? 'gray': '');?>"><?=htmlspecialchars($row['eManufacturer']);?></td>
+                <td width="20"  class="<?=(abs($sortBy) == 3 ? 'gray': '');?>"><?=htmlspecialchars($row['fitment']);?></td>
+                <td width="20"  class="<?=(abs($sortBy) == 4 ? 'gray': '');?>"><?=htmlspecialchars($row['ecmFirmware']);?></td>
+                <td width="250" class="<?=(abs($sortBy) == 5 ? 'gray': '');?>"><?=htmlspecialchars($row['eName']);?></td>
+                <td width="150" class="<?=(abs($sortBy) == 6 ? 'gray': '');?>"><?=htmlspecialchars($row['baffleType']);?></td>
+                <td width="50"  class="<?=(abs($sortBy) == 7 ? 'gray': '');?>"><?=htmlspecialchars($row['year']);?></td>
+                <td width="50"  class="<?=(abs($sortBy) == 8 ? 'gray': '');?>"><?=htmlspecialchars($row['model']);?></td>
+                <td width="125" class="<?=(abs($sortBy) == 9 ? 'gray': '');?>"><?=htmlspecialchars($row['eSize']);?></td>
+                <td width="100" class="<?=(abs($sortBy) == 10 ? 'gray': '');?>"><?=htmlspecialchars($row['Filename']);?></td>
+            </tr>
+          <?   } ?>
+        </table>
+        <div class="panel_paginator clearfix">
+<!--
+            <p class="showing">
+                <?=$from;?> - <?=$to;?> of <?=$count;?> | <span class="display"> Display</span>
+            </p>&nbsp;
+-->
+            <customdropdownbox id="pageSize1" options="php::array(10=>10,20=>20)" style="width:62px;"/>
+            <navigator id="nav" class="paginator" template="<?=\ClickBlocks\Core\IO::dir('backend');?>/common/navigator.html" navSize="2" />
+            <div class="clear"></div>
+        </div>
+        <?}?>
+    </panel>
+
+
+
+    <!--  -->
+
+  <panel id="otherMapsTable" class="clearfix mb25" visible="0">
+
+    <button onclick="ajax.doit('->backToSearchMaps')" type="button" class="btn btn-info mb25"><span class="glyphicon glyphicon-chevron-left"></span>&nbsp;Back</button>
+
+
+    <panel id="editOtherMaps" class="clearfix mb10" visible="1">
+
+      <b>Map Name</b><br />
+      <textlabel id="editInputMap" />
+      <!--<textbox id="editInputMap" type="text" class="form-control" value=""/>-->
+      <br />
+
+
+      <b>Map Description</b><br />
+      <textlabel id="mapDescription" />
+      <!--<memo id="mapDescription" class="clearfix form-control mb25"></memo>-->
+
+      <div class="row">
+        <div class="col-xs-4">
+
+              <table>
+                  <tr>
+                    <td><b>Make</b></td>
+                  </tr>
+                  <tr>
+                    <td><textlabel id="mapMake" /></td>
+                    <!--<td><textbox id="mapMake" maxlength="50" class="form-control"  /></td>-->
+                  </tr>
+                  <tr>
+                    <td><b>Model</b></td>
+                  </tr>
+                  <tr>
+                    <td><textlabel id="mapModel" /></td>
+                  </tr>
+                  <tr>
+                    <td><b>Year</b></td>
+                  </tr>
+                  <tr>
+                    <td><textlabel id="mapYear" /></td>
+                  </tr>
+              </table>
+        </div>
+        <div class="col-xs-4">
+              <table>
+                <tr>
+                  <td><b>Exhaust Manufacturer</b></td>
+                </tr>
+                <tr>
+                  <td><textlabel id="mapeManufacturer" /></td>
+                </tr>
+                <tr>
+                  <td><b>Exhaust Name</b></td>
+                </tr>
+                <tr>
+                  <td><textlabel id="mapeName" /></td>
+                </tr>
+              </table>
+        </div>
+        <div class="col-xs-4">
+            <table>
+                <tr>
+                <td><b>Baffle Type</b></td>
+                </tr>
+                <tr>
+                <td><textlabel id="mapbaffleType" /></td>
+                </tr>
+                <tr>
+                <td><b>Engine Size</b></td>
+                </tr>
+                <tr>
+                <td><textlabel id="mapeSize" /></td>
+                </tr>
+            </table>
+        </div>
+      </div><!-- ROW -->
+    </panel>
+
+
+
+
+
+
+    <table class="clearfix tbl_info mt10">
+      <tr>
+          <?php if( $otherMapApiVersion > 0 ) { ?>
+            <th>MAP:  <a href="/development/media/vh/<?=$otherMapApiVersion;?>/<?=$otherMapID?>.map" class="blue-link"><?=$otherMapID?></a></th>
+          <? } else { ?>
+            <th>MAP:  <a href="/development/media/<?=$otherMapYear;?>/<?=$otherMapID?>.map" class="blue-link"><?=$otherMapID?></a></th>
+          <? } ?>
+
+        <th width="190" class="gray">LAST UPDATED</th>
+      </tr>
+
+  <!--
+      <?php if($omVEFrontCylUpdated) { ?>
+      <tr>
+        <td>
+          <a href="javascript:void(0)" onclick="ajax.doit('->showPopupWithValues','VEFrontCyl','<?=$otherMapID?>');">VE Front Cyl</a>
+        </td>
+        <td class="gray"><?=$omVEFrontCylUpdated?></td>
+      </tr>
+      <? } ?>
+  -->
+
+    <? foreach($groupList as $i => $groupname) { ?>
+
+        <?php if(isset($groupname)) { ?>
+            <tr><td>
+              <h4 class="text-center"><?=$groupname;?></h4>
+            </td><td></td></tr>
+        <? } ?>
+
+        <? foreach($omTableInfo as $mapStructureArrayName => $data) { ?>
+            <?php if(isset($data['Updated']) && ($data['group'] == $groupname)) { ?>
+
+                <?php if( $data['ShowInCSR'] == true ) { ?>
+                    <tr>
+                      <td>
+                        <ul class="list-group-item" onclick="ajax.doit('->showPopupWithValues','<?=$mapStructureArrayName;?>','<?=$otherMapID?>');">
+                          <span><?=$data['title'];?></span>
+                        <small><em style="color:#C4C4C4;"><?=$data['dataType'];?></em></small>
+                        </ul>
+                      </td>
+                      <td class="gray"><?=$data['Updated'];?></td>
+                    </tr>
+                <? } ?>
+
+
+            <? } ?>
+        <? } ?>
+
+    <? } ?>
+
+    </table>
+
+
+
+
+
+<!--
+
+    <table class="clearfix tbl_info">
+    <tr>
+      <th>MAP TABLES - <?=$otherMapID?></th>
+      <th width="190" class="gray">LAST UPDATED</th>
+    </tr>
+    <tr>
+      <td>
+        <a href="javascript:void(0)" onclick="ajax.doit('->showPopupWithValues','EngineDisplacement','<?=$otherMapID?>');">Engine Displacement</a>
+      </td>
+      <td class="gray"><?=$omEngineDisplacementUpdated?></td>
+    </tr>
+    <tr>
+      <td>
+        <a href="javascript:void(0)" onclick="ajax.doit('->showPopupWithValues','IACWarmupSteps','<?=$otherMapID?>');">IAC Warmup Steps</a>
+      </td>
+      <td class="gray"><?=$omIACWarmupStepsUpdated?></td>
+    </tr>
+    <tr>
+      <td>
+        <a href="javascript:void(0)" onclick="ajax.doit('->showPopupWithValues','IdleRPM','<?=$otherMapID?>');">Idle RPM</a>
+      </td>
+      <td class="gray"><?=$omIdleRPMUpdated?></td>
+    </tr>
+    <tr>
+      <td>
+        <a href="javascript:void(0)" onclick="ajax.doit('->showPopupWithValues','VEFrontCyl','<?=$otherMapID?>');">VE Front Cyl</a>
+      </td>
+      <td class="gray"><?=$omVEFrontCylUpdated?></td>
+    </tr>
+    <tr>
+      <td>
+        <a href="javascript:void(0)" onclick="ajax.doit('->showPopupWithValues','VERearCyl','<?=$otherMapID?>');">VE Rear Cyl</a>
+      </td>
+      <td class="gray"><?=$omVERearCylUpdated?></td>
+    </tr>
+    <tr>
+      <td>
+        <a href="javascript:void(0)" onclick="ajax.doit('->showPopupWithValues','EITMSoffTemperature','<?=$otherMapID?>');">EITMS off Temperature</a>
+      </td>
+      <td class="gray"><?=$omEITMSoffTemperatureUpdated?></td>
+    </tr>
+    <tr>
+      <td>
+        <a href="javascript:void(0)" onclick="ajax.doit('->showPopupWithValues','EITMSonTemperature','<?=$otherMapID?>');">EITMS on Temperature</a>
+      </td>
+      <td class="gray"><?=$omEITMSonTemperatureUpdated?></td>
+    </tr>
+    <tr>
+      <td>
+        <a href="javascript:void(0)" onclick="ajax.doit('->showPopupWithValues','AccelerationEnrichment','<?=$otherMapID?>');">Acceleration Enrichment</a>
+      </td>
+      <td class="gray"><?=$omAccelerationEnrichmentUpdated?></td>
+    </tr>
+    <tr>
+      <td>
+        <a href="javascript:void(0)" onclick="ajax.doit('->showPopupWithValues','DecelEnleanment','<?=$otherMapID?>');">Deceleration Enleanment</a>
+      </td>
+      <td class="gray"><?=$omDecelEnleanmentUpdated?></td>
+    </tr>
+    <tr>
+      <td>
+        <a href="javascript:void(0)" onclick="ajax.doit('->showPopupWithValues','AFRatio','<?=$otherMapID?>');">Air-Fuel Ratio</a>
+      </td>
+      <td class="gray"><?=$omAFRatioUpdated?></td>
+    </tr>
+    <tr>
+      <td>
+        <a href="javascript:void(0)" onclick="ajax.doit('->showPopupWithValues','SparkAdvanceFrontCyl','<?=$otherMapID?>');">Spark Advance Front Cyl</a>
+      </td>
+      <td class="gray"><?=$omSparkAdvanceFrontCylUpdated?></td>
+    </tr>
+    <tr>
+      <td>
+        <a href="javascript:void(0)" onclick="ajax.doit('->showPopupWithValues','SparkAdvanceRearCyl','<?=$otherMapID?>');">Spark Advance Rear Cyl</a>
+      </td>
+      <td class="gray"><?=$omSparkAdvanceRearCylUpdated?></td>
+    </tr>
+    <?php if($omThrtottleProgrsivityUpdated) { ?>
+    <tr>
+      <td>
+        <a href="javascript:void(0)" onclick="ajax.doit('->showPopupWithValues','ThrtottleProgrsivity','<?=$otherMapID?>');">Throttle Progressivity</a>
+      </td>
+      <td class="gray"><?=$omThrtottleProgrsivityUpdated?></td>
+    </tr>
+    <? } ?>
+  </table>
+
+-->
+
+
+<!--    <button style="margin-top: 10px;" class="btn-small black ml10" onclick="if(validators.validate('maps', 'error', ''))ajax.doit('->saveSearchMap','<?=$otherMapID?>');">Save Map</button> -->
+
+</panel>
+
+    <?if(!$otherMaps){?>
+    <panel id="compareMapBlock" visible="0">
+        <div class="panel-control clearfix">
+          <button onclick="ajax.doit('->backToSearch')" class="back-btn"></button>
+            <h2><?=$compareMapName;?></h2>
+            <?if($setToCurrentMap == 'touring' || $setToCurrentMap == 'cvo') { ?>
+              <a href="javascript:void(0)" onclick="ajax.doit('->setToCurrent');" class="blue-link">set to current</a>
+            <? } ?>
+        </div>
+        <?if($dataTypeCompare == 'flat') {?>
+        <div class="graph-table-wrapper ml5">
+          <div class="title-for-table"><?=$mapDataTitle?> = <?=$compareMap?></div>
+        </div>
+        <? } elseif($dataTypeCompare == 'table') {?>
+        <div class="graph-table-wrapper ml5">
+          <div class="title-for-table"><?=$mapDataTitle?></div>
+            <table class="graph-table">
+              <tr>
+                <th>
+                  <strong>C°</strong>
+                </th>
+                <th>
+                  <strong><?=$Steps?></strong>
+                </th>
+              </tr>
+            <? foreach((array)$rowsCompare as $key => $valueCompare){ ?>
+              <tr>
+                <td>
+                  <?= $key; ?>
+                </td>
+                <td>
+                  <?=$valueCompare;?>
+                </td>
+              </tr>
+            <? } ?>
+          </table>
+        </div>
+        <?} elseif ($dataTypeCompare == 'matrix') {?>
+    <div class="graph-table-wrapper ml25">
+      <div class="title-for-table"><?=$mapDataTitle?></div>
+       <? if ($mapDataTitle == 'Throttle Progressivity') { ?>
+        <div class="desc-for-table top bold" style="font-weight: bold">Twist Grip Position</div>
+      <? } else { ?>
+        <div class="desc-for-table top bold" style="font-weight: bold">Throttle Position</div>
+      <? } ?>
+      <table class="graph-table">
+        <tr>
+          <th>&nbsp;</th>
+          <?foreach($arrMatrixColCompare as $col){?>
+          <th><?=$col;?></th>
+          <?}?>
+        </tr>
+        <?
+        foreach($arrMatrixRowCompare as $row){ ?>
+          <tr>
+            <td><?=$row?></td>
+          <? foreach($arrMatrixColCompare as $col){ ?>
+            <td onclick="showSSInputData(this);">
+              <input type="hidden" name="mapSSInputKeys_<?=$col;?>[]" value="<?= $row; ?>"/>
+              <span class="ssInputDataDisplay">
+                <? if($rowsCompare[$col][$row] != '')?>
+                <?= $rowsCompare[$col][$row]; ?>
+              </span>
+              <input name="mapSSInputValues_<?=$col;?>[]" value="<?= $rowsCompare[$col][$row]; ?>" oldvalue="<?= $rowsCompare[$col][$row]; ?>" type="text" onkeyup="this.value = this.value.replace(/[^0-9]/g,'');" class="ssInputData" style="display:none;" onblur="hideSSInputData(this);"/>
+            </td>
+          <? } ?>
+          </tr>
+        <? } ?>
+      </table>
+      <div class="desc-for-table bottom bold">RPM</div>
+
+      <? if ($mapDataTitle == 'Throttle Progressivity') { ?>
+      <br/>
+      <table class="graph-table">
+        <? if ($mapDataTitle == 'Throttle Progressivity') { ?>
+        <div class="desc-for-table top bold" style="font-weight: bold">Twist Grip Position</div>
+      <? } else { ?>
+        <div class="desc-for-table top bold" style="font-weight: bold">Throttle Position</div>
+      <? } ?>
+        <tr>
+          <th>&nbsp;</th>
+          <?foreach($arrMatrixColCompareThrProg as $col){?>
+          <th><?=$col;?></th>
+          <?}?>
+        </tr>
+        <?
+        foreach($arrMatrixRowCompareThrProg as $row){ ?>
+          <tr>
+            <td><?=$row?></td>
+          <? foreach($arrMatrixColCompareThrProg as $col){ ?>
+            <td onclick="showSSInputData(this);">
+              <input type="hidden" name="mapSSInputKeys_<?=$col;?>[]" value="<?= $row; ?>"/>
+              <span class="ssInputDataDisplay">
+                <? if($rowsCompareThrProg[$col][$row] != '')?>
+                <?= $rowsCompareThrProg[$col][$row]; ?>
+              </span>
+              <input name="mapSSInputValues_<?=$col;?>[]" value="<?= $rowsCompareThrProg[$col][$row]; ?>" oldvalue="<?= $rowsCompareThrProg[$col][$row]; ?>" type="text" onkeyup="this.value = this.value.replace(/[^0-9]/g,'');" class="ssInputData" style="display:none;" onblur="hideSSInputData(this);"/>
+            </td>
+          <? } ?>
+          </tr>
+        <? } ?>
+      </table>
+      <div class="desc-for-table bottom bold">RPM</div>
+      <? } ?>
+      <div><hidden id="valKey"/></div>
+      <div><hidden id="valCols"/></div>
+      <div><hidden id="valColsThrProg"/></div>
+    </div>
+      <? } ?>
+    </panel>
+    <?}?>
+<script type="text/javascript">function clickSearch(e){if ((e || event).keyCode == 13) ajax.doit('<?=$class?>@<?=$uniqueID?>->search', $('.search-input').val());}</script>
+<script type="text/javascript">function allMaps()    { ajax.doit('<?=$class?>@<?=$uniqueID?>->mapFilterCustomer', 0);}</script>
+<script type="text/javascript">function customMaps() {ajax.doit('<?=$class?>@<?=$uniqueID?>->mapFilterCustomer', 1);}</script>
+<script type="text/javascript"><![CDATA[
+    function valid(){
+      validators.clean('maps','error');
+      $('#<?=ID('country')?>').removeClass('error');
+      return validators.validate('maps', 'error', '');
+    }
+    function validateYear(cids, mode)
+    {
+      ctrl = controls.$(cids[0]);
+      ctrl.value < 1970 ? controls.addClass(ctrl, 'error') : controls.removeClass(ctrl, 'error');
+      return !(ctrl.value < 1970);
+    }
+  ]]>
+    function showSSInputData(el){
+
+    }
+
+    function hideSSInputData(el){
+
+    }
+
+</script>
+

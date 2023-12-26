@@ -1,0 +1,189 @@
+html {
+    position: relative;
+    min-height: 100%;
+    min-width: 1100px;
+}
+
+body {
+    font: 14px sans-serif;
+
+    margin-top: 20px;
+    margin-left:10px;
+    margin-right:10px;
+
+    /* Custom footer height */
+    margin-bottom: 100px;
+}
+
+.container {
+     /*this was done to remove responsive behavior */
+    width: 1170px;
+}
+
+svg {
+    /* for spacing underneath the chart*/
+    margin-bottom: 50px;
+}
+
+
+#reportButtons > ul > li {
+    margin: 0;
+    padding: 0;
+}
+
+.list-inline {
+    margin-left: 0px;
+}
+
+hr {
+    margin: 0;
+    padding: 0;
+}
+
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 60px;
+    background-color: #f5f5f5;
+
+    padding-top: 15px;
+}
+
+#footerText {
+    display: inline;
+}
+
+
+#logo {
+    width: 120px;
+}
+
+#Title {
+    color: gray;
+}
+
+#chartArea {
+    position: relative;
+}
+
+.table {
+    width: 200px;
+    /*z-index: 1000;*/
+    z-index: 1;
+    position: absolute;
+    left: 67px;
+    top: 24px;
+
+}
+
+td {
+    text-align: center;
+}
+
+/*
+#chartArea > table > tbody > tr > th {
+  background-color: rgba(253, 255, 0, 0.0196078);
+}
+*/
+
+#dateRange {
+    width: 200px;
+    /*display: block;*/
+    display: none;
+}
+
+/*  D3 styles below */
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #000;
+    /*   shape-rendering: crispEdges; */
+}
+
+.bar {
+    fill: orange;
+}
+
+.bar:hover {
+     fill: orangered;
+}
+.highlight {
+    fill: orangered;
+}
+
+.x.axis path {
+    display: none;
+}
+
+.d3-tip {
+    line-height: 1;
+    font-weight: bold;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    border-radius: 2px;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+    box-sizing: border-box;
+    display: inline;
+    font-size: 10px;
+    width: 100%;
+    line-height: 1;
+    color: rgba(0, 0, 0, 0.8);
+    content: "\25BC";
+    position: absolute;
+    text-align: center;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+    margin: -1px 0 0 0;
+    top: 100%;
+    left: 0;
+}
+
+/* Override btn-primary active setting */
+.btn-default {
+    text-shadow: none;
+}
+
+
+
+/* Bootstrap template Sticky footer styles
+-------------------------------------------------- */
+html {
+    position: relative;
+    min-height: 100%;
+}
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+}
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 80px;
+    background-color: #f5f5f5;
+}
+
+
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+
+.container {
+    /*   width: auto; */
+    /*   max-width: 680px; */
+    /*   padding: 0 15px; */
+}
+.container .text-muted {
+    margin: 20px 0;
+}

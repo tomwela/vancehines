@@ -1,0 +1,51 @@
+<body id="page" class="login-page">
+
+<!--[if lt IE 8]>
+<p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+    your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a>
+    to improve your experience.</p>
+<![endif]-->
+
+<!-- Add your site or application content here -->
+
+<section class="main">
+    <div class="data-block">
+        <form class="form-signin">
+            <div class="head-block">
+              <figure class="logo">
+                <img src="/Application/_includes/img/vhlogo.png " width="126" height="35"/>
+              </figure>
+            </div>
+            <panel id="forgot" visible="1">
+              <div class="inputs-row">
+                Enter your email below and your password will be sent to you.<br /><br />
+                <validatorrequired tag="div" id="valEmail" controls="email" order="0" hiding="1" client="1" groups="forgot" class="login-error">Email is empty</validatorrequired>
+                <validatoremail tag="div" id="valEmailFormat" controls="email" order="1" hiding="1" client="1" groups="forgot" class="login-error">Email format is incorrect</validatoremail>
+                <validatorcustom tag="div" id="valCustom" hiding="1" serverFunction="->checkEmailExist" groups="forgot" class="login-error">Email or Password are incorrect</validatorcustom>
+                <textbox id="email" class="input-block-level" placeholder="Example@email.com" onkeypress="return forgot(event);"/>
+              </div>
+              <button id="btnLogin" class="btn-large blue float-right mr25 btnSend" type="button" onclick="$('.login-error').hide();if (validators.validate('forgot', 'error', '',false)) ajax.doit('->retrievalPassword', ajax.getFormValues());">Send</button>
+            </panel>
+            <panel id="success" visible="0">
+              <div class="inputs-row">
+                Success!<br /> Your password will be emailed<br /> to you shortly.
+              </div>
+              <button id="btnSuccess" class="btn-large blue float-right mr25" type="button" onclick="window.location.replace('<?=$config->cms;?>/');">Return to Login</button>
+            </panel>
+        </form>
+    </div>
+</section>
+<footer>
+    <div class="data-block">
+      2013 - <?php echo date("Y"); ?>. Vance &amp; Hines. All Rights Reserved.<span class="fr">GCID: <?php echo strtoupper(shell_exec('git rev-parse --short HEAD')); ?></span>
+    </div>
+</footer>
+<script type="text/javascript"><![CDATA[
+  function forgot(e){
+    if (e.which == 13 || e.keyCode == 13) {
+      $('#btnLogin').click();
+      return false;
+    }
+  }
+]]></script>
+</body>

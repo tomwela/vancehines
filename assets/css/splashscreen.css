@@ -1,0 +1,42 @@
+body {
+	padding: 0px;
+	padding-bottom: 40px;
+	background-color: #2493cf;
+}
+        
+#white {
+	background-color: #FFF;
+	padding: 20px;
+	padding-top: 80px;
+	padding-bottom: 0px;
+}
+        
+#center {
+	text-align: center;
+}
+        
+#centertext {
+	text-align: center;
+	padding-bottom: 60px;
+	border-bottom: 1px #5cb3e2 solid;
+}
+          
+.container {
+	padding-top: 60px;
+}
+        
+.container2{
+	background-color: #fff;
+	margin-left: auto;
+	margin-right: auto;
+}
+        
+h1 {
+	color: #fff;
+	font-family: 'Lato', sans-serif;
+	padding-top: 20px;
+}
+        
+img {
+	border: 0px;
+}

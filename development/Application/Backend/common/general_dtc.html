@@ -1,0 +1,32 @@
+<body id="page">
+
+  <section class="main">
+    <header>
+      <div class="header-data clearfix">
+        <h1 class="logo"><a href="#"></a></h1>
+        <div class="user-info-control">
+          <input type="button" class="log-btn" onclick="ajax.doit('->logout');" value="out"/>
+          <div class="greeting-block">
+            Welcome,&nbsp;
+            <span class="user-name"><?=ClickBlocks\Utils\Strings::cut(htmlspecialchars($userName), 25, false);?></span>
+          </div>
+        </div>
+      </div>
+      <nav class="main">
+        <div class="links-block">
+          <a class="<?=$class1;?>" href="<?=$config->cms;?>/map/queue">d 1 </a>
+          <a class="<?=$class2;?>" href="<?=$config->cms;?>/map/search">d 2</a>
+          <a class="<?=$class3;?>" href="<?=$config->cms;?>/test">d 3</a>
+        </div>
+      </nav>
+    </header>    
+    <div class="data-block pt20">
+      <?=$dtcform;?>    
+    </div>       
+  </section>
+  <footer>
+    <div class="data-block">
+      2013 - <?php echo date("Y"); ?>. Vance &amp; Hines. All Rights Reserved.<span class="fr">GCID: <?php echo strtoupper(shell_exec('git rev-parse --short HEAD')); ?></span>
+    </div>
+  </footer>
+</body>

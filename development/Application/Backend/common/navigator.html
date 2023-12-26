@@ -1,0 +1,16 @@
+﻿<div>
+  <div class="go_to_page_caption">Go To Page</div>
+       <input id="page_#uniqueID#" type="text" class="gradient-bg small go_to_page" maxlength="5" onkeypress="if (event.keyCode == 13) ajax.doit('#callBack#', 'pos', this.value - 1);" onkeyup="this.value = this.value.replace(/[^\d]/g, '');"/>
+  <a href="javascript:void(0);" onclick="ajax.doit('#callBack#', 'pos', document.getElementById('page_#uniqueID#').value - 1);" style="text-decoration:none;">
+    <div class="btn_go_to_page">Go</div>
+  </a>
+    <previous><a href="javascript:void(0);" onclick="ajax.doit('#callBack#', 'pos', #pos#);"><span class="first_page"><span>&nbsp;</span></span></a></previous>
+        <next><a href="javascript:void(0);" onclick="ajax.doit('#callBack#', 'pos', #pos#);"><span class="last_page"><span></span></span></a></next><span>&nbsp;</span>
+    <page><a href="javascript:void(0);" onclick="ajax.doit('#callBack#', 'pos', #pos#);"><span>#page#</span></a></page>
+    <spacer><a href="javascript:void(0);"><span>...</span></a></spacer>
+    <page />
+    <page type="active"><a href="javascript:void(0);" class="active_page"><span class="active_page">#page#</span></a></page>
+    <page />
+    <spacer />
+    <page />
+</div>

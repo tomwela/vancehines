@@ -1,0 +1,31 @@
+<div class="panel-control clearfix">
+  <h2>Previous Service List</h2>
+</div><br />
+<div class="data-block">
+<div class="panel-control pt0">
+    <span style="vertical-align:  bottom;">
+      <p class="showing">
+        <?=$from;?> - <?=$to;?> of <?=$count;?> | <span class="display">Display</span>
+      </p>&nbsp;
+    </span>
+    <customdropdownbox id="pageSize" options="php::array(10=>10,20=>20)" style="width:62px;"/>  
+</div>
+<table class="tbl_info">
+<?=$data; foreach ($rows as $k => $row){ ?>
+<tr>
+  <td ><?=htmlspecialchars($row['fullName']);?></td>
+  <td width="190" class="gray "><?=htmlspecialchars(date("m/d/Y",strtotime($row['date'])));?></td>
+</tr>
+<?}?>
+</table>
+<div class="panel_paginator clearfix">
+<!--
+  <p class="showing">
+    <?=$from;?> - <?=$to;?> of <?=$count;?> | <span class="display"> Display</span> 
+  </p>
+-->
+  <customdropdownbox id="pageSize1" options="php::array(10=>10,20=>20)" style="width:62px;"/>
+  <navigator id="nav" class="paginator" template="<?=\ClickBlocks\Core\IO::dir('backend');?>/common/navigator.html" navSize="2" />
+  <div class="clear"></div>
+</div>
+</div>

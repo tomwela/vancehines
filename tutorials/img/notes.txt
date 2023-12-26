@@ -1,0 +1,20 @@
+
+To process images, GIMP software on the Mac was used.
+
+General Notes:
+Original images are scaled down to 828 X 1462 pixels and saved in the native GIMP format as an intermediate step.  After further image manipulation is done, this intermediate image is inserted into the template image.  The intermediate image can be inserted on it's own layer but underneath the shine layer.
+
+Finally, Save for Web as PNG-24 with a Resize height of 960 pixels. The x-dimension will adjust automatically.
+
+To highlight a section of an image a modal effect was simulated by adding
+another layer above, using the paint brush to color the layer black, then
+setting the layers opacity to 45%.  From here, simply making a cut on this
+layer will serve to highlight that part of the image. 
+
+
+Other edits such as removing unwanted text or graphics involved copying and
+pasting from the same layer but doing "Merge Visible Layers" from the image
+menu to combine to 1 layer.
+
+
+

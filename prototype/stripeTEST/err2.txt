@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/var/www/vhosts/dev2/bin/reports/geoloc.py", line 120, in <module>
+    dumpdata = collectData();
+  File "/var/www/vhosts/dev2/bin/reports/parse_csr_uploads.py", line 531, in __init__
+    if int(version[:3]) >= 272:
+ValueError: invalid literal for int() with base 10: '31U'

@@ -1,0 +1,803 @@
+<panel id="mainform" masterpage="<?=\ClickBlocks\Core\IO::dir('backend');?>/common/general.html">
+
+    <h2 class="page-title">Customer Details</h2>
+    <hyperlink id="lnkCustomerEdit" href="javascript:void(0)">&nbsp;&nbsp;&nbsp;<span id="gicons" class="glyphicon glyphicon-pencil"></span></hyperlink>
+
+    <panel id="customerDetail" tag="div" class="gray-container">
+        <div>
+            <input type="hidden" id="customerID" name="customerID" value="<?=$customerID;?>"/>
+            <input type="hidden" id="user"       name="user"       value="<?=$userName;?>"/>
+            <input type="hidden" id="role"       name="role"       value="<?=$userRole;?>"/>
+        </div>
+
+
+        <panel id="customerDetailDisplay" tag="div" visible="0">
+            <div class="row">
+                <div class="col-xs-8">
+
+                    <div class="row">
+                      <center>
+                        <ul class="list-inline">
+                            <li><code>Customer Number:</code><textlabel id="customerCustomerNumberLabel" /></li>
+                            <li><code>Return Auth #:</code><textlabel id="customerRANLabel"/></li>
+                        </ul>
+                      </center>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-xs-5 col-xs-offset-1">
+                            <table class="table-hover">
+                            <tr>
+                              <td><b>Make:</b></td>
+                              <td><textlabel id="customerMakeLabel"/></td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <b>Model:</b>
+                              </td>
+                              <td>
+                                <textlabel id="customerModelLabel"/>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <b>Year:</b>
+                              </td>
+                              <td>
+                                <textlabel id="customerYearLabel"/>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <b>VIN#:</b>
+                              </td>
+                              <td>
+                                <textlabel id="customerVinLabel"/>
+                              </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>HD Map:</b>
+                                </td>
+                                <td>
+                                    <textlabel id="customerOriginalMapLabel"/>
+                                </td>
+                            </tr>
+                          </table>
+
+                        </div>
+                        <div class="col-xs-6 ">
+
+                            <table class="table-hover">
+                              <tr>
+                                <td>
+                                  <b>ECM Firmware:</b>
+                                </td>
+                                <td>
+                                  <textlabel id="customerEcmFirmwareLabel"/>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <b>ECM Part #:</b>
+                                </td>
+                                <td>
+                                  <textlabel id="customerEcmPartLabel"/>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <b>Firmware Version:</b>
+                                </td>
+                                <td>
+                                  <textlabel id="customerFVersionLabel"/>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <b>Hardware Version:</b>
+                                </td>
+                                <td>
+                                  <textlabel id="customerHVersionLabel"/>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <b>Downloaded Map ID:</b>
+                                </td>
+                                <td>
+                                  <textlabel id="customerCalIDLabel"/>
+                                </td>
+                              </tr>
+                            </table>
+                        </div>
+
+                    </div>
+                    <div class="row">
+
+                        <br />
+                        <div style="text-align: center; margin-left: auto; margin-right: auto;">
+                            <table>
+                                <tr>
+                                  <td><b>App Version:</b></td>
+                                  <td style="float: left"><textlabel id="customerAVersionLabel"/></td>
+                                </tr>
+                                <tr>
+                                  <td><b>IP Address:</b></td>
+                                  <td><!-- http://www.geoipview.com/?q= -->
+                                      <!-- http://www.ipaddresslocation.org/ip-address-locator.php?lookup= -->
+                                      <!-- http://www.ip-tracker.org/locator/ip-lookup.php?ip= -->
+                                    <hyperlink id="customerIPAddressLabel"
+                                               href='http://www.geoipview.com/?q='
+                                               target="_blank"
+                                               text="customerIPAddressLabel"
+                                               class="pull-left"
+                                               onclick="event.preventDefault(event);window.open( $(this).attr('href')+$(this).text() )">
+                                    </hyperlink>
+                                      &nbsp;
+                                    <select class="form-control input-sm pull-right" style="width:100px;"
+                                            onchange="if(this.value.length>0) window.open( $(this).val()+$('a[id*=customerIPAddressLabel]').text() );">
+                                        <option value="">Alternates</option>
+                                        <option value="http://www.ipaddresslocation.org/ip-address-locator.php?lookup=">ipaddresslocation.org</option>
+                                        <option value="http://www.ip-tracker.org/locator/ip-lookup.php?ip=">ip-tracker.org</option>
+                                    </select>
+
+                                  </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                    </div> <!-- row -->
+
+                </div>
+                <div class="col-xs-4" style="border-left: 1px solid #C4C4C4;">
+                    <div class="row">
+                        <center>
+                            <span><span id="gicons" class="glyphicon glyphicon-user"></span>&nbsp;Customer ID:&nbsp;<textlabel id="customerCustomerIDLabel"/></span><hr style="width: 75%;"/>
+                        </center>
+
+                    </div>
+                    <div class="row ml5">
+                        <span>
+                            <dl>
+                                <dt>Name</dt>
+                                <dd><textlabel id="customerFullNameLabel" /></dd>
+                                <dt>Address</dt>
+                                <dd><textlabel id="customerAddressLabel" /></dd>
+                                <dd><textlabel id="customerAddress2Label" /></dd>
+                                <dd><textlabel id="customerCityLabel" />&nbsp;<textlabel id="customerStateLabel" />&nbsp;<textlabel id="customerZipLabel" /></dd>
+                                <dd><textlabel id="customerCountryLabel"/></dd>
+                                <dt>Phone</dt>
+                                <dd><textlabel id="customerPhoneLabel"/></dd>
+                                <dt>Email</dt>
+                                <dd><textlabel id="customerEmailLabel"/></dd>
+                                <dt>Contact Preferences</dt>
+                                <dd><textlabel id="customerContactPreferencesLabel"/></dd>
+                            </dl>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+        </panel>
+
+
+        <panel id="customerDetailEdit" tag="div" visible="0">
+            <div class="row">
+                <div class="col-xs-8">
+
+                    <div class="row">
+                      <center>
+                        <ul class="list-inline">
+                            <li><code>Customer Number:</code><textbox id="customerCustomerNumber" maxlength="10" class="w100" onkeyup="this.value = this.value.replace(/[^0-9]/g,'');" /></li>
+                            <li><code>Return Auth #:</code><textbox id="customerRAN" maxlength="10" class="w100" onkeyup="this.value = this.value.replace(/[^0-9]/g,'');" /></li>
+                        </ul>
+                      </center>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-xs-5 col-xs-offset-1">
+    <!--                        <table class="table-hover">
+                            <tr>
+                              <td><b>Make:</b></td>
+                              <td><textbox id="customerMake" maxlength="50" class="w175" /></td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <b>Model:</b>
+                              </td>
+                              <td>
+                                <textbox id="customerModel" maxlength="128" class="w175" />
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <b>Year:</b>
+                              </td>
+                              <td>
+                                <textbox id="customerYear" maxlength="4" class="w175" onkeyup="this.value = this.value.replace(/[^0-9\-(). ]/g,'');" />
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <b>VIN#:</b>
+                              </td>
+                              <td>
+                                <textbox id="customerVin" maxlength="50" class="w175" />
+                                <validatorrequired tag="div" id="valCustomerVin" controls="customerVin" client="1" groups="customerEdit"/>
+                              </td>
+                            </tr>
+                          </table>-->
+
+                        </div>
+                        <div class="col-xs-6">
+
+    <!--                        <table class="table-hover">
+                              <tr>
+                                <td>
+                                  <b>ECM Firmware:</b>
+                                </td>
+                                <td>
+                                    <textbox id="customerEcmFirmware" maxlength="255" class="w175" />
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <b>ECM Part #:</b>
+                                </td>
+                                <td>
+                                    <textbox id="customerEcmPart" maxlength="255" class="w175" />
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <b>Firmware Version:</b>
+                                </td>
+                                <td>
+                                    <textbox id="customerFVersion" maxlength="255" class="w175" />
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <b>Hardware Version:</b>
+                                </td>
+                                <td>
+                                    <textbox id="customerHVersion" maxlength="255" class="w175" />
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <b>Downloaded Map ID:</b>
+                                </td>
+                                <td>
+                                    <textbox id="customerCalID" maxlength="255" class="w175" />
+                                </td>
+                              </tr>
+                            </table>-->
+                        </div>
+
+                    </div>
+                    <div class="row">
+                      <center>
+                        <br />
+    <!--                    <table>
+                            <tr>
+                                <td><b>App Version:</b></td>
+                                <td>
+                                    <textbox id="customerAVersion" type="text" class="form-control mb15" value="" size="45" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>IP Address:</b></td>
+                                <td>
+                                    <textbox id="customerIPAddress" type="text" class="form-control mb15" value="" size="45" />
+                                </td>
+                            </tr>
+                        </table>-->
+                      </center>
+                    </div>
+
+                </div>
+                <div class="col-xs-4" style="border-left: 1px solid #C4C4C4;">
+                    <div class="row">
+                      <center>
+                          <span><span id="gicons" class="glyphicon glyphicon-user"></span>&nbsp;Customer ID:&nbsp;<textlabel id="customerCustomerIDLabel"/></span>
+                          <!--<span><span id="gicons" class="glyphicon glyphicon-user"></span>&nbsp;Customer ID:&nbsp;<textbox id="customerCustomerID"/></span>-->
+                          <hr style="width: 70%;"/>
+                      </center>
+                    </div>
+                    <div class="row ml5">
+                        <span>
+                            <dl>
+                                <dt>Name</dt>
+                                <dd><textbox id="customerFullName" maxlength="255" class="form-control input-sm w200" /></dd>
+                                <dt>Address</dt>
+                                <dd><textbox id="customerAddress"  maxlength="128" class="form-control input-sm w200" placeholder="Address" /></dd>
+                                <dd><textbox id="customerAddress2" maxlength="64"  class="form-control input-sm w200" placeholder="Address2" /></dd>
+                                <dd><textbox id="customerCity"     maxlength="64"  class="form-control input-sm w200" placeholder="City" /></dd>
+                                <dd><textbox id="customerState"    maxlength="64"  class="form-control input-sm w100" placeholder="State" /></dd>
+                                <dd><textbox id="customerZip"      maxlength="64"  class="form-control input-sm w100" placeholder="Zip" /></dd>
+                                <dd><textbox id="customerCountry"  maxlength="128" class="form-control input-sm w200" placeholder="Country" /></dd>
+
+                                <dt>Phone</dt>
+                                <dd><textbox id="customerPhone" maxlength="32" class="form-control input-sm w200" onkeyup="this.value = this.value.replace(/[^0-9\-(). ]/g,'');" /></dd>
+                                <dt>Email</dt>
+                                <dd><textbox id="customerEmail" maxlength="128" class="form-control input-sm w200" /></dd>
+                            </dl>
+                            <dl>
+                                <dt>Contact Preferences</dt>
+                                <dd>
+                                    <textbox type="hidden" id="customerContactPreferences" maxlength="20" class="form-control input-sm w200" />
+
+                                    <select class="form-control input-sm" style="width:100px;"
+                                            onchange="var value = $(this).val(); $('input[name*=customerContactPreferences]').val(value) ;">
+                                        <option value="">Choose</option>
+                                        <option value="Email">Email</option>
+                                        <option value="Phone">Phone</option>
+                                        <option value="None">None</option>
+                                    </select>
+
+                                </dd>
+                            </dl>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+          <table class="ml45">
+            <tr>
+              <td>
+                <div class="fl mt5 pb20">
+                  <button class="btn btn-default" onclick="ajax.doit('->cancelEditCustomer');">Cancel</button>
+                  <button class="btn btn-primary ml10" onclick="if(validators.validate('customerEdit', 'error', '')) ajax.doit('->saveCustomer', ajax.getFormValues());">Save</button>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </panel>
+    </panel>
+
+
+    <div class="tabBox">
+        <ul class="tabs-list">
+            <li id="CerrentMap" class="active"><a href="javascript:void(0);">Current Map</a></li>
+            <li id="OtherMaps"><a href="javascript:void(0);">Other Maps</a></li>
+            <li id="LiveData"><a href="javascript:void(0);">Live Data</a></li>
+            <li id="CSRHistory"><a href="javascript:void(0);">CSR History</a></li>
+
+            <?php if($mapNotesCount <= 0) { ?>
+                <li id="AllMapNotes"><a href="javascript:void(0);">All Map Notes</a></li>
+            <? } else { ?>
+                <li id="AllMapNotes"><a href="javascript:void(0);">All Map Notes <span class="badge" style="background-color:orangered; color:white; text-shadow: none;"><?=$mapNotesCount;?></span></a></li>
+            <? } ?>
+        </ul>
+    </div>
+
+
+    <div id="currentMap" style="display: block;" class="panel-corners t_switch">
+
+    <panel tag="div" id="editMaps" class="clearfix panel-control ml10 mr20 pb100" visible="1">
+      <a href="javascript:void(0)" onclick="ajax.doit('->editMap');" >
+          <h3 id="mapName" class="mt10 mb0"><?=$nameMap?>&nbsp;&nbsp;<span id="gicons" class="glyphicon glyphicon-pencil"></span></h3>
+      </a>
+      <span id="mapDescription" class="clearfix">Description:&nbsp;&nbsp;&nbsp;<?=$descMap?></span>
+    </panel>
+
+
+    <panel tag="div" id="editMaps1" class="clearfix panel-control pb175 ml10 mr20 mt10" visible="0"  >
+        <textbox id="editInputMap" type="text" class="form-control mb10" value=""/>
+        <memo id="mapDescription" class="form-control" rows="" cols="0"></memo>
+        <div class="mt10 mb10">
+          <button class="btn btn-default gray" onclick="ajax.doit('->cancelEditMap');">Cancel</button>
+          <button class="btn btn-primary ml10" onclick="ajax.doit('->saveMap','<?=$edMapID?>');">Save</button>
+        </div>
+    </panel>
+
+    <div class="clearfix fl mb5 mt5"> <!-- Buttons -->
+
+        <button class="btn btn-primary btn-outline ml10" onclick="ajax.doit('->showNotes', <?=$mapID;?>);">Map Notes</button>
+
+        <!-- Split button -->
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary btn-outline ml10" onclick="ajax.doit('->sendMap', <?=$mapID;?>);" >Send Map</button>
+            <button type="button" class="btn btn-primary btn-outline dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="javascript:void(0);" onclick="ajax.doit('->editSendMap');">Send to another VIN</a></li>
+            </ul>
+        </div>
+
+
+        <button class="btn btn-primary btn-outline ml10" onclick="ajax.doit('->sendNote',  <?=$customerID;?>);">Send Note</button>
+        <button class="btn btn-primary btn-outline ml10" onclick="ajax.doit('->slotZeroRestore');">Slot 0 Restore</button>
+
+        <?php if( $userRole == 'engineer' || $userRole == 'admin' ) { ?>
+            <button class="btn btn-primary btn-outline ml10" onclick="ajax.doit('->setAsOriginalMap', <?=$customerID;?>, <?=$mapID;?>);">isOriginalMap = 1</button>
+            <div class="dropdown ml10" style="display: inline-block">
+                <button class="btn btn-primary btn-outline dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <span id="gicons" class="glyphicon glyphicon-cloud-upload"></span>
+
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                    <li><a href="javascript:void(0);" onclick="ajax.doit('->uploadToServer', <?=$mapID;?>, 1);">Upload to dev.vhfp3.com</a></li>
+                    <li><a href="javascript:void(0);" onclick="ajax.doit('->uploadToServer', <?=$mapID;?>, 2);">Upload to Production</a></li>
+
+                </ul>
+            </div>
+        <? } ?>
+
+    </div>
+
+     <!-- send map panel -->
+    <panel tag="div" id="editSendMap" class="clearfix panel-control pb225 ml0 mr20 mt30" visible="0"  >
+        <div class="col-xs-4 pl10">
+            <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="alert alert-warning" role="alert">
+                    <span class="glyphicon glyphicon-info-sign"></span>
+                    &nbsp;
+                    To send this map to a another VIN, enter a VIN number. You can only send to another VIN with the same ECM Firmware.
+                </div>
+                <textbox id="editInputSendMap" type="text" class="form-control mb10" value="" placeholder="Enter a vin" />
+                <div class="pull-right">
+                  <button class="btn btn-default btn-sm ml0" onclick="ajax.doit('->cancelSendMap');">Cancel</button>
+                  <button class="btn btn-primary btn-sm ml10" onclick="if( $('input[name=editInputSendMap]').val().length == 17 ) { ajax.doit('->sendMap', <?=$mapID;?>, $('input[name=editInputSendMap]').val()); } else {alert('VIN must be 17 characters.')}">Send</button>
+                </div>
+            </div>
+        </div>
+        </div>
+    </panel>
+
+
+      <table class="tbl_info">
+        <tr>
+
+
+            <?php if( $apiVersion > 0 ) { ?>
+                <th>MAP:  <a href="/development/media/vh/<?=$apiVersion;?>/<?=$mapID;?>.map" class="blue-link"><?=$mapID;?></a></th>
+            <? } else { ?>
+                <th>MAP:  <a href="/development/media/<?=$mYear;?>/<?=$mapID;?>.map" class="blue-link"><?=$mapID;?></a></th>
+            <? } ?>
+
+
+
+          <th width="190" class="gray">LAST UPDATED</th>
+        </tr>
+
+    <!--  For Reference
+        <?php if($cmVEFrontCylUpdated) { ?>
+        <tr>
+          <td>
+
+            <a href="javascript:void(0)" onclick="ajax.doit('->showPopupWithValues','VEFrontCyl');"><?=$cmVEFrontCyltitle;?> </a>
+          </td>
+          <td class="gray"><?=$cmVEFrontCylUpdated?></td>
+        </tr>
+        <? } ?>
+    -->
+
+
+    <? foreach($groupList as $i => $groupname) { ?>
+
+        <?php if(isset($groupname)) { ?>
+            <tr><td>
+                <h4 class="text-center"><?=$groupname;?></h4>
+            </td><td></td></tr>
+        <? } ?>
+
+
+        <? foreach($tableInfo as $mapStructureArrayName => $data) { ?>
+            <?php if( isset($data['Updated']) && ($data['group'] == $groupname) ) { ?>
+
+                <?php if( $data['ShowInCSR'] == true  || $userRole == 'admin') { ?>
+
+                    <tr>
+                        <td>
+                            <ul class="list-group-item" onclick="ajax.doit('->showPopupWithValues','<?=$mapStructureArrayName;?>');">
+                                <span><?=$data['title'];?></span>
+                                <small><em style="color:#C4C4C4;"><?=$data['dataType'];?></em></small>
+                            </ul>
+                        </td>
+                        <td class="gray"><?=$data['Updated'];?></td>
+                    </tr>
+
+                <? } ?>
+            <? } ?>
+        <? } ?>
+
+    <? } ?>
+
+      </table>
+    </div><!-- END id="currentMap" -->
+    <div id="otherMaps" style="display: none;" class="panel-corners t_switch">
+      <widgetcustomersothermaps id="mapSearch" visible="1"/>
+
+      <panel class="clearfix mt15 mb15" id="otherMapsTable" visible="0">
+
+        <panel id="editOtherMaps" class="panel-control clearfix mb10" visible="1">
+            <div class="ml10">
+                <button onclick="ajax.doit('->backTootherMaps')" type="button" class="btn btn-info"><span class="glyphicon glyphicon-chevron-left"></span>&nbsp;Back</button>
+                <h3 id="mapName" class="mt15 mb0"><?=$otherMapName?></h3>
+                <span id="mapDescription" class="clearfix mb15">Description:&nbsp;&nbsp;<?=$otherMapDesc?></span>
+            </div>
+
+            <div class="clearfix fl mb5 mt10">
+                <button class="btn btn-primary btn-outline ml10" onclick="ajax.doit('->showNotes', <?=$otherMapID;?>);">Notes</button>
+                <!--<button class="btn btn-primary btn-outline ml10" onclick="ajax.doit('->sendMap', <?=$otherMapID;?>);">Send Map</button>-->
+
+                <!-- Split button -->
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary btn-outline ml10" onclick="ajax.doit( '->sendMap', <?=$otherMapID;?> );" >Send Map</button>
+                    <button type="button" class="btn btn-primary btn-outline dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="caret"></span>
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="javascript:void(0);" onclick="ajax.doit('->editSendOtherMap');">Send to another VIN</a></li>
+                    </ul>
+                </div>
+
+                <?php if( $userRole == 'engineer' || $userRole == 'admin' ) { ?>
+                    <button class="btn btn-primary btn-outline ml10" onclick="ajax.doit('->setAsOriginalMap', <?=$customerID;?>,<?=$otherMapID;?>);">isOriginalMap = 1</button>
+                    <div class="dropdown ml10" style="display: inline-block">
+                        <button class="btn btn-primary btn-outline dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <span id="gicons" class="glyphicon glyphicon-cloud-upload"></span>
+
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li><a href="javascript:void(0);" onclick="ajax.doit('->uploadToServer', <?=$otherMapID;?>, 1);">Upload to dev.vhfp3.com</a></li>
+                            <li><a href="javascript:void(0);" onclick="ajax.doit('->uploadToServer', <?=$otherMapID;?>, 2);">Upload to Production</a></li>
+
+                        </ul>
+                    </div>
+                <? } ?>
+            </div>
+
+            <!-- send other map panel -->
+            <panel tag="div" id="editSendOtherMap" class="clearfix panel-control pb225 ml0 mr20 mt30" visible="0"  >
+               <div class="col-xs-4 pl10">
+                   <div class="panel panel-default">
+                   <div class="panel-body">
+                       <div class="alert alert-warning" role="alert">
+                           <span class="glyphicon glyphicon-info-sign"></span>
+                           &nbsp;
+                           To send this map to a another VIN, enter a VIN number. You can only send to another VIN with the same ECM Firmware.
+                       </div>
+                       <textbox id="editInputSendOtherMap" type="text" class="form-control mb10" value="" placeholder="Enter a vin" />
+                       <div class="pull-right">
+                         <button class="btn btn-default btn-sm ml0" onclick="ajax.doit('->cancelSendOtherMap');">Cancel</button>
+                         <button class="btn btn-primary btn-sm ml10" onclick="if( $('input[name=editInputSendOtherMap]').val().length == 17 ) { ajax.doit('->sendMap', <?=$otherMapID;?>, $('input[name=editInputSendOtherMap]').val()); } else {alert('VIN must be 17 characters.')}">Send</button>
+                       </div>
+                   </div>
+               </div>
+               </div>
+            </panel>
+
+        </panel>
+
+
+        <table class="clearfix tbl_info mt125">
+          <tr>
+
+
+              <?php if( $otherMapApiVersion > 0 ) { ?>
+                <th>MAP:  <a href="/development/media/vh/<?=$otherMapApiVersion;?>/<?=$otherMapID;?>.map" class="blue-link"><?=$otherMapID;?></a></th>
+              <? } else { ?>
+                <th>MAP:  <a href="/development/media/<?=$otherMapYear;?>/<?=$otherMapID;?>.map" class="blue-link"><?=$otherMapID;?></a></th>
+              <? } ?>
+
+
+            <th width="190" class="gray">LAST UPDATED</th>
+          </tr>
+
+        <!--  For Reference
+          <?php if($omVEFrontCylUpdated) { ?>
+          <tr>
+            <td>
+              <a href="javascript:void(0)" onclick="ajax.doit('->showPopupWithValues','VEFrontCyl','<?=$otherMapID?>');">VE Front Cyl</a>
+            </td>
+            <td class="gray"><?=$omVEFrontCylUpdated?></td>
+          </tr>
+          <? } ?>
+        -->
+
+        <? foreach($groupList as $i => $groupname) { ?>
+
+            <?php if(isset($groupname)) { ?>
+                <tr><td>
+                  <h4 class="text-center"><?=$groupname;?></h4>
+                </td><td></td></tr>
+            <? } ?>
+
+            <? foreach($omTableInfo as $mapStructureArrayName => $data) { ?>
+                <?php if(isset($data['Updated']) && ($data['group'] == $groupname)) { ?>
+
+                    <?php if( $data['ShowInCSR'] == true ) { ?>
+
+                    <tr>
+                      <td>
+                        <ul class="list-group-item" onclick="ajax.doit('->showPopupWithValues','<?=$mapStructureArrayName;?>','<?=$otherMapID?>');">
+                        <span><?=$data['title'];?></span>
+                        <small><em style="color:#C4C4C4;"><?=$data['dataType'];?></em></small>
+                        </ul>
+                      </td>
+                      <td class="gray"><?=$data['Updated'];?></td>
+                    </tr>
+                    <? } ?>
+
+
+
+                <? } ?>
+            <? } ?>
+
+        <? } ?>
+
+
+        </table>
+      </panel>
+    </div><!--  End  id="otherMaps" -->
+    <panel tag="div" id="liveData" style="display: none;" class="panel-corners t_switch">
+        <panel tag="div" id="liveDataConnect" class="panel-control clearfix">
+            <h2><textlabel id="customerMakeLabel"/> &amp; <textlabel id="customerModelLabel"/></h2>
+            <div class="fr">
+                <button class="btn btn-primary btn-outline black" onclick="ajax.doit('->connectLiveData','<?=$buttonName?>')"><?=$buttonName?></button>
+            </div>
+        </panel>
+        <panel id="liveDataTable">
+            <table class="tbl_info mt20">
+              <tr>
+                <th>DETAILS</th>
+                <th width="190" class="gray">LIVE DATA</th>
+              </tr>
+
+              <? foreach ($fields as $key => $field) {?>
+              <tr>
+                <td>
+                  <?=$namesLiveData[$key]?>
+                </td>
+                <td class="gray"><?=$cachedData['LiveDataParams'][$field]?> <?if ( $cachedData['LiveDataParams'][$field] <> '' and ($namesLiveData[$key] == 'Front Adaptive Fuel %'  or $namesLiveData[$key]=='Rear Adaptive Fuel %' ) ) {?> % <? } ?></td>
+              </tr>
+              <? } ?>
+
+            </table>
+        </panel>
+    </panel>
+    <div id="history" style="display: none;" class="panel-corners t_switch">
+        <WidgetCsrHistory tag="div" id="csrHIstory" template="<?=ClickBlocks\Core\IO::dir('widgets')?>/Backend/map/history.html"/>
+    </div>
+    <div id="allMapNotes" style="display: none;" class="panel-corners t_switch">
+        <WidgetAllMapNotes tag="div" id="allMapNotes" visible="1" />
+    </div>
+
+    <script><![CDATA[
+    $(document).ready(function(){
+      $(".tabBox ul li").bind("click", function(){
+        $(".tabBox ul li").removeClass("active");
+        $(this).addClass("active");
+        $(".t_switch").hide();
+        var index = $(this).index();
+        if(controls.isIE()) index = (index - 1)/2;
+         $(".t_switch:eq("+index+")").show();
+        ajax.doit('->updateTab',index);
+      });
+    });
+
+    function updateLastPing()
+    {
+      ajax.doit('->updateLastPing');
+      setTimeout(updateLastPing, 10000);
+    }
+    setTimeout(updateLastPing, 10000);
+
+    function replaceMapDescription()
+    {
+      var text = $('#<?=ID('mapDescription')?>').val();
+      $('#<?=ID('mapDescription')?>').val(text.replace(/<br \/>/g, "\n"));
+    }
+    function deleteInputValues()
+    {
+        var cells = $("input[type='text'][name^='mapSSInputValues']").val('');
+        cells.css('background-color','');
+        cells.css('border','');
+    }
+    function inputValuesLowerThanColumnValues()
+    {
+      const ErrorYes  = "yes";
+      const ErrorNo   = "no";
+      var messageFlag = ErrorNo;
+
+      $("input.ssInputData").removeClass("error");
+      $('span#message').replaceWith( "<span id='message'></span>" );
+
+      $("input.ssInputData").each(function(index, value){
+          var value = $(this).attr('value');
+          var name  = $(this).attr('name');
+
+          var first  = name.indexOf("_")+1;
+          var last   = name.indexOf("[");
+          var column = name.substring(first,last);
+
+          if ( parseFloat(value) > parseFloat(column) )
+          {
+            //console.log(name +" : "+ value +" is greater than "+ column);
+
+            $(this).addClass("error");
+            $('span#message').text('Input values cannot be higher than their column values.').css("color","red");
+            messageFlag = ErrorYes;
+          } else {
+            if (messageFlag != ErrorYes) {
+                $('span#message').text('Values are okay.').css("color","black");
+            }
+          } // else
+      });
+    }
+    function hili(type) {
+        $("td:contains('"+ type +"')").css("background-color", "#CCEEFB");
+        $("em:contains('"+ type +"')").css("background-color", "#FFFF00").css("color", "black");
+      return;
+    }
+    function matrix(numb) {
+        $("input.ssInputData").val( numb );
+        ajax.doit('->saveMapSSInput', ajax.getFormValues());
+      return;
+    }
+    function table(numb) {
+        $("input[class*='multiInputData']").val( numb );
+        ajax.doit('->saveMapMultiInput', ajax.getFormValues());
+      return;
+    }
+    function flat(numb) {
+        $("input[class*='mapSingleInput']").val( numb );
+        ajax.doit('->saveMapSingleInput', ajax.getFormValues());
+      return;
+    }
+
+    function jetColor(val, min, max) {
+      var cmin = Number(min);
+      var cmax = Number(max);
+      var c1   = Number(255);
+      var max4 = parseFloat( (cmax-cmin)/4 ).toFixed(2);
+      if (max4 == 0) {
+          max4 = 1;
+      };
+      var value = parseFloat( val-cmin ).toFixed(2);
+      if ( Number(value) < Number(max4) ) {
+          var r=Number(0);
+          var g=Number(0);
+          var b=parseFloat( c1+((255-c1)*value/max4) ).toFixed(2);
+          return [ Number(r).toFixed(0), Number(g).toFixed(0), Number(b).toFixed(0) ];
+      } else if ( Number(value) < parseFloat(2*max4) ) {
+          var r=Number(0);
+          var g=parseFloat( 255*(value-max4)/max4 ).toFixed(2);
+          var b=Number(255);
+          return [ Number(r).toFixed(0), Number(g).toFixed(0), Number(b).toFixed(0) ];
+      } else if ( Number(value) < parseFloat(3*max4) ) {
+          var r=parseFloat( 255*(value-2*max4)/max4 ).toFixed(2);
+          var g=Number(255);
+          var b=parseFloat( 255-r ).toFixed(2);
+          return [ Number(r).toFixed(0), Number(g).toFixed(0), Number(b).toFixed(0) ];
+      } else if ( Number(value) < Number(cmax) ) {
+          var r=Number(255);
+          var g=parseFloat( 255-255*(value-3*max4)/max4 ).toFixed(2);
+          var b=Number(0);
+          return [ Number(r).toFixed(0), Number(g).toFixed(0), Number(b).toFixed(0) ];
+      } else {
+          var r=Number(255);
+          var g=Number(0);
+          var b=Number(0);
+          return [ Number(r).toFixed(0), Number(g).toFixed(0), Number(b).toFixed(0) ];
+      }
+      if (r<0) {r=Number(0);};
+      if (g<0) {g=Number(0);};
+      if (b<0) {b=Number(0);};
+      return [ Number(r).toFixed(0), Number(g).toFixed(0), Number(b).toFixed(0) ];
+    }
+
+    ]]></script>
+</panel>

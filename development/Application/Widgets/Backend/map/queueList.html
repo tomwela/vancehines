@@ -1,0 +1,122 @@
+<div class="clearfix">
+  <h2 class="page-title">Map Queue</h2>
+  <div class="search-wrapper">
+    <textbox id="searchText" class="gradient-bg search-input" onkeypress="clickSearch(event);" onclick="$(this).select();" placeholder="Search" style="height: 27px; width: 200px;" />
+
+    <hyperlink id="search" href="javascript:;" onclick="ajax.doit('<?=$class?>@<?=$uniqueID?>->search');"><div class="search-icon"></div></hyperlink>
+  </div>
+</div>
+
+<div class="panel-control">
+  <?if(count($rows) > 0) {?>
+  <p class="showing">
+    <?=$from;?> - <?=$to;?> of <?=$count;?> | <span class="display">Display</span>
+  </p>
+  <customdropdownbox id="pageSize" options="php::array(10=>10,20=>20)" style="width:62px;"/>
+  <?}?>
+
+
+
+<!-- <div class="data-controller">
+    <p class="showing">
+      <span class="display">Filter by:</span>
+    </p>
+    <div class="custom-select f-l mt10 ml100">
+      <span class="arrow">&nbsp;</span>
+      <div class="splash"></div>
+      <div class="field">Show all</div>
+      <ul>
+        <li>000</li>
+        <li>1vhp</li>
+        <li>Filter1</li>
+        <li>Filter2</li>
+      </ul>
+    </div>
+    <div class="line"></div>
+    <button class="reload-btn"></button>
+  </div>-->
+
+
+</div>
+<?if(!$rows) {?>
+  <div class="no-results-block">No Results</div>
+<?} else {?>
+<table class="tbl_info">
+<?=$data; foreach ($rows as $k => $row){ ?>
+<tr>
+  <td width="205" class="<?=(abs($sortBy) == 1 ? 'gray': '');?>">
+
+    <?if($row['0']['mapCount']>1) {?>
+      <a href="/admin/customers?customerID=<?=$row['customerID'];?>">
+        <?=htmlspecialchars($row['vin']);?>&nbsp;&nbsp;<span class="badge"><?=htmlspecialchars($row['0']['mapCount']);?></span>
+      </a>
+    <?} else {?>
+      <a href="/admin/customers?customerID=<?=$row['customerID'];?>">
+        <?=htmlspecialchars($row['vin']);?>
+      </a>
+    <? } ?>
+
+  </td>
+  <td width="90"  class="<?=(abs($sortBy) == 2 ? 'gray': '');?>"><?=htmlspecialchars($row['updatedDate']);?></td>
+  <td width="80"  class="<?=(abs($sortBy) == 3 ? 'gray': '');?>"><?=htmlspecialchars($row['updatedTime']);?></td>
+  <td width="150" class="<?=(abs($sortBy)== 4 ? 'gray': '');?>"> <?=htmlspecialchars($row['fullName']);?></td>
+  <td width="80"  class="<?=(abs($sortBy) == 5 ? 'gray': '');?>"><?=htmlspecialchars($row['fVersion']);?></td>
+  <td width="100" class="<?=(abs($sortBy)== 6 ? 'gray': '');?>"> <?=htmlspecialchars($row['model']);?></td>
+  <td width="60"  class="<?=(abs($sortBy) == 7 ? 'gray': '');?>"><?=htmlspecialchars($row['year']);?></td>
+  <td width="50"  class="<?=(abs($sortBy) == 8 ? 'gray': '');?>">
+    <?php
+        if (preg_match("/iPod|iPad|iPhone/", $row['aVersion'])) {
+            echo "<img src='/development/Application/_includes/img/appleLogo.png' width='20' height='20'>";
+        } else {
+            echo "<img src='/development/Application/_includes/img/androidLogo.png' width='20' height='23'>";
+        }
+    ?>
+  </td>
+  <td width="40">
+    <div class="hide_links">
+
+        <a href="/admin/customers?customerID=<?=$row['customerID'];?>&checkout=1">Check Out</a>
+
+    </div>
+  </td>
+</tr>
+<? } ?>
+</table>
+
+
+
+
+<div class="panel_paginator clearfix">
+<!--
+  <p class="showing">
+    <?=$from;?> - <?=$to;?> of <?=$count;?> | <span class="display"> Display</span>
+  </p>
+-->
+
+  <customdropdownbox id="pageSize1" options="php::array(10=>10,20=>20)" style="width:62px;"/>
+  <navigator id="nav" class="paginator" template="<?=\ClickBlocks\Core\IO::dir('backend');?>/common/navigator.html" navSize="1" />
+
+<? } ?>
+</div>
+
+<script type="text/javascript">function clickSearch(e){if ((e || event).keyCode == 13) ajax.doit('<?=$class?>@<?=$uniqueID?>->search');}</script>
+<script type="text/javascript">
+  function reDraw() {
+    ajax.doit('<?=$class?>@<?=$uniqueID?>->refresh');
+    setTimeout(reDraw, 120000);
+  }
+  setTimeout(reDraw, 120000);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+

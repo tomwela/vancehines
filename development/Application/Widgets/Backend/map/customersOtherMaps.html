@@ -1,0 +1,149 @@
+<panel id="searchMapBlock" class="data-block mb15" visible="1">
+    <div class="panel-control clearfix">
+          <h2>Select a Map</h2>
+          <div class="fr">
+            <textbutton id="originalTuneButton" class="btn btn-primary btn-outline" value="Original Tune" onclick="ajax.doit('->restoreOriginalMap');"></textbutton>
+          </div>
+        </div><br />
+
+    <?if(!$rows) {?>
+        <div class="no-results-block clearfix">No Results</div>
+    <?} else {?>
+
+    <div class="panel-control pt0 clearfix">
+        <p class="showing">
+            <?=$from;?> - <?=$to;?> of <?=$count;?> | <span class="display">Display</span>
+        </p>&nbsp;
+        <customdropdownbox id="pageSize" options="php::array(10=>10,20=>20)" style="width:62px;"/>
+    </div>
+
+    <table class="tbl_info clearfix">
+        <?=$data; foreach ($rows as $k => $row){  ?>
+        <tr>
+            <td width="280" class="<?=(abs($sortBy) == 1 ? 'gray': '');?>"><a  onclick="ajax.doit('->showTablesOtherMap','<?=$row['mapID']?>');"><?=htmlspecialchars($row['name']);?></a></td>
+            <td width="90"  class="<?=(abs($sortBy) == 2 ? 'gray': '');?>"><?=htmlspecialchars($row['updatedDate']);?></td>
+            <td width="90"  class="<?=(abs($sortBy) == 3 ? 'gray': '');?>"><?=htmlspecialchars($row['updatedTime']);?></td>
+            <td width="350" class="<?=(abs($sortBy) == 4 ? 'gray': '');?>"><?=$row['description'];?></td>
+            <td width="20"  class="<?=(abs($sortBy) == 5 ? 'gray': '');?>"><?=$row['isOriginalMap'];?></td>
+            <td width="20"  class="<?=(abs($sortBy) == 6 ? 'gray': '');?>"><?=$row['mapID'];?></td>
+            <td width="115">
+                <?if(!$perem ) {  ?>
+                <div class="hide_links">
+                    <a href="javascript:void(0)" onclick="ajax.doit('->showTablesOtherMap','<?=$row['mapID']?>') ;">View</a>
+                    <?if ($row['makeDelete']){?><a href="javascript:void(0)" onclick="ajax.doit('->mapDelete', '<?=$row['mapID']?>',1) ;" class="deactivate">
+                    Delete</a>
+                    <?}?>
+                </div>
+                <? } ?>
+            </td>
+        </tr>
+        <?   } ?>
+    </table>
+    <div class="panel_paginator clearfix">
+
+        <!--<p class="showing">-->
+            <!--<?=$from;?> - <?=$to;?> of <?=$count;?> | <span class="display"> Display</span>-->
+        <!--</p>&nbsp;-->
+
+        <customdropdownbox id="pageSize1" options="php::array(10=>10,20=>20)" style="width:62px;"/>
+        <navigator id="nav" class="paginator" template="<?=\ClickBlocks\Core\IO::dir('backend');?>/common/navigator.html" navSize="2" />
+        <div class="clear"></div>
+    </div>
+    <?}?>
+</panel>
+
+
+
+
+
+<panel id="otherMapsTable" class="clearfix mb25" visible="0">
+
+    <button onclick="ajax.doit('->backToSearchMaps')" type="button" class="btn btn-info mb25"><span class="glyphicon glyphicon-chevron-left"></span>&nbsp;Back</button>
+
+
+    <panel id="editOtherMaps" class="clearfix mb10" visible="1">
+      <b>Map Name</b><br />
+      <textlabel id="editInputMap" />
+      <br />
+
+      <b>Map Description</b><br />
+      <textlabel id="mapDescription" />
+    </panel>
+
+
+
+    <table class="clearfix tbl_info mt10">
+      <tr>
+          <?php if( $otherMapApiVersion > 0 ) { ?>
+            <th>MAP:  <a href="/development/media/vh/<?=$otherMapApiVersion;?>/<?=$otherMapID?>.map" class="blue-link"><?=$otherMapID?></a></th>
+          <? } else { ?>
+            <th>MAP:  <a href="/development/media/<?=$otherMapYear;?>/<?=$otherMapID?>.map" class="blue-link"><?=$otherMapID?></a></th>
+          <? } ?>
+
+        <th width="190" class="gray">LAST UPDATED</th>
+      </tr>
+
+
+    <? foreach($groupList as $i => $groupname) { ?>
+
+        <?php if(isset($groupname)) { ?>
+            <tr><td>
+              <h4 class="text-center"><?=$groupname;?></h4>
+            </td><td></td></tr>
+        <? } ?>
+
+        <? foreach($omTableInfo as $mapStructureArrayName => $data) { ?>
+            <?php if(isset($data['Updated']) && ($data['group'] == $groupname)) { ?>
+
+                <?php if( $data['ShowInCSR'] == true ) { ?>
+                    <tr>
+                      <td>
+                        <ul class="list-group-item" onclick="ajax.doit('->showPopupWithValues','<?=$mapStructureArrayName;?>','<?=$otherMapID?>');">
+                          <span><?=$data['title'];?></span>
+                        <small><em style="color:#C4C4C4;"><?=$data['dataType'];?></em></small>
+                        </ul>
+                      </td>
+                      <td class="gray"><?=$data['Updated'];?></td>
+                    </tr>
+                <? } ?>
+
+
+            <? } ?>
+        <? } ?>
+
+    <? } ?>
+
+    </table>
+</panel>
+
+
+
+
+
+
+<script type="text/javascript">function clickSearch(e){if ((e || event).keyCode == 13) ajax.doit('<?=$class?>@<?=$uniqueID?>->search', $('.search-input').val());}</script>
+<script type="text/javascript">function allMaps()    { ajax.doit('<?=$class?>@<?=$uniqueID?>->mapFilterCustomer', 0);}</script>
+<script type="text/javascript">function customMaps() {ajax.doit('<?=$class?>@<?=$uniqueID?>->mapFilterCustomer', 1);}</script>
+<script type="text/javascript"><![CDATA[
+    function valid(){
+      validators.clean('maps','error');
+      $('#<?=ID('country')?>').removeClass('error');
+      return validators.validate('maps', 'error', '');
+    }
+    function validateYear(cids, mode)
+    {
+      ctrl = controls.$(cids[0]);
+      ctrl.value < 1970 ? controls.addClass(ctrl, 'error') : controls.removeClass(ctrl, 'error');
+      return !(ctrl.value < 1970);
+    }
+  ]]>
+    function showSSInputData(el){
+
+    }
+
+    function hideSSInputData(el){
+
+    }
+
+</script>
+

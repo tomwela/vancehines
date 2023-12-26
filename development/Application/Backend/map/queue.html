@@ -1,0 +1,13 @@
+<panel id="mainform" masterpage="<?=\ClickBlocks\Core\IO::dir('backend');?>/common/general_mapqueue.html" class="data-block">
+  <widgetmapqueue id="mapQueue" />
+  <script type="text/javascript">
+    <![CDATA[
+      function updateWidget() 
+      {
+        ajax.doit('->updateWidget');
+        setTimeout(updateWidget, 60000);
+      }
+    setTimeout(updateWidget, 60000);
+    ]]>
+  </script>
+</panel>

@@ -1,0 +1,8 @@
+body{}
+input{padding-left: 2px; margin: 6px; width: 200px; height: 40px;}
+.reset{background-color: brown;padding-top:2px; width: 100px; border-radius: 5px; margin:0 auto; 
+	color: white; height: 33px; font-size: 1.3em; text-align: center;cursor:pointer; }
+.head{background-color: brown}
+table{position: relative; margin:0 auto; }
+.feed{text-align: center; font-size:1.2em; color: brown; margin-top:30px; margin-bottom:10px;}
+.trash{color:gray; margin: 0 auto; position: relative; text-align: center; margin-top:50px; }

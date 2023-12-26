@@ -1,0 +1,62 @@
+<div class="data-block ml20 mr20">
+  <span class="glyphicon glyphicon-remove" onclick="popup.hide('<?=ID('mapMultiInput')?>')"></span>
+  <span id="tableType" name="table"></span>
+
+  <h3 style="display: inline-block"><?=$title;?></h3>   
+  <panel id="compareLink" tag="span" class="ml10">
+      <a href="javascript:void(0)" onclick="base=$('#<?=ID('reg_currValue')?>').val(); location.href = '/admin/map/compare?customerID=<?=$customerID;?>&title=<?=$title?>&key=<?=$keyTable?>&data=<?=$rows?>'+base; " class="blue-link">compare</a>
+  </panel>
+  <div class="clearfix"></div>
+  
+  <panel id="popupContainer" class="data pt0 pb0 mt0">
+    <div class="row ml10">
+      <div class="value-block">
+        <span class="name">Min:</span>
+        <span class="value"><?=$min;?></span>
+      </div>
+      <div class="value-block mr0">
+        <span class="name">Max:</span>
+        <span class="value"><?=$max;?></span>
+      </div>
+    </div>
+  
+  
+    <table class="merged-table">
+      <tr>
+        <th><?=$yAxisTitle?></th>
+        <th><?=$valTitle?></th>
+      </tr>
+      <? if (is_array($rows) && count($rows))
+         foreach($rows as $key => $value) { ?>
+      <tr>
+        <td>
+          <?=$key;?>
+        </td>
+        <td onclick="$(this).find('.multiInputData').select();">
+          <input type="hidden" name="mapMultiInputKeys[]" value="<?= $key; ?>"/>
+          <input name="mapMultiInputValues[]" value="<?= $value; ?>" type="text" class="pl5 pr5 short multiInputData" onkeyup="<?=$onKeyUpScript;?>" maxlength="<?=$maxLength;?>"/>
+          
+        </td>
+      </tr>
+      <? } ?>
+    </table>
+    <div><hidden id="valKey"/></div>
+   
+  </panel>
+
+  <panel id="saveButton" tag="div" class="clearfix mt30">
+    <button class="btn-small black" onclick="$('.multiInputData').removeClass('error');ajax.doit('->saveMapMultiInput', ajax.getFormValues());">Save</button>
+
+<? if ($title='Front Charge Dilution Effect' || $title='Rear Charge Dilution Effect') { ?>
+        <!-- <button class="btn-small gray ml15" onclick="deleteInputValues();">Clear Values</button> -->
+
+        <span class="ml25">
+          <textbox id="copyFromMapIDtables" name="copyFromMapIDtables" type="text" class="form-control inputWithButton" placeholder="Map ID"/>
+          <button class="btn-small gray" onclick="ajax.doit('->copyTableFromMapIDtables', '<?=$keyTable?>', $('input[name=copyFromMapIDtables]').val() )">Copy Map</button>
+        </span>
+
+    <?}?>
+    
+    <hyperlink id="restoreOriginalLink" href="javascript:void(0)" onclick="ajax.doit('->restoreToOriginal', '<?=$keyTable?>');" class="blue-link fr mt10">restore to original tune</hyperlink>
+  </panel>
+</div>

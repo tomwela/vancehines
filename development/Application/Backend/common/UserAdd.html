@@ -1,0 +1,86 @@
+<div class="data-block">
+            <span class="glyphicon glyphicon-remove" onclick="popup.hide('<?=ID('userAdd')?>')"></span>
+            <h2>Add/Edit User</h2>
+            <div class="data pt30">
+                <table class="merged-table big">
+                    <tr>
+                        <td>
+                          <label>First&nbsp;Name</label>
+                        </td>
+                        <td>
+                          <textbox id="firstName" maxlength="25" class="gradient-bg small"/>
+                          <validatorrequired id="valfirstName" controls="firstName" hiding="1" client="1" groups="user" class="validation-text"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                          <label>Last Name</label>
+                        </td>
+                        <td>
+                          <textbox id="lastName" maxlength="25" class="gradient-bg small"/>
+                          <validatorrequired id="vallastName" controls="lastName" hiding="1" client="1" groups="user" class="validation-text"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                          <label>Email</label>
+                        </td>
+                        <td><textbox id="email" maxlength="200" class="gradient-bg small"/>
+                            <validatorrequired id="valreqemail" controls="email" hiding="1" client="1" groups="user" class="validation-text"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td >
+                          <div class="pt30">
+                            <label>Password</label>
+                          </div>
+                        </td>
+                        <td >
+                          <div class="pt30">
+                            <textbox type="password" id="password" maxlength="200" class="gradient-bg small"/>
+                            <validatorrequired id="valpassword" controls="password" hiding="1" client="1" groups="user" class="validation-text" style="color:red;margin-left:135px;text-align:left;height:auto;width:auto;"/>
+                          </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                          <label>Confirm</label>
+                        </td>
+                        <td>
+                          <textbox type="password" id="confirmPassword" maxlength="255" class="gradient-bg small"/>
+                          <validatorrequired id="valreqconfirmPassword" controls="confirmPassword" hiding="1" client="1" groups="user" class="validation-text"/>
+                        </td>
+                    </tr>
+<!--                    <tr>
+                        <td></td>
+                        <td>
+                          <textbox type="password" id="HPassword" maxlength="255" />
+                        </td>
+                    </tr>-->
+                </table>
+              <validatoremail id="valregemail" controls="email" client="1" groups="user" style="color:red;text-align:left;height:auto;width:auto;font-size: 8pt" text="Email is invalid"/>
+              <validatorregularexpression expression="/.*.{6}/" id="valpass" class="validation-text"  style="color:red;text-align:left;height:auto;width:auto;font-size: 8pt" controls="password" client="1" groups="user" tag="div" order="7" text="Password should at least contain 6 characters."/>
+              <validatorcustom tag="div" id="valcomparePassword"  client="1" controls="password,confirmPassword" clientFunction="function(cids){controls.removeClass(controls.$(cids[0]),'error');controls.removeClass(controls.$(cids[1]),'error');if(controls.$(cids[0]).value==controls.$(cids[1]).value){return true;}else{controls.addClass(controls.$(cids[0]),'error');controls.addClass(controls.$(cids[1]),'error');return false;}}" groups="user" class="validation-text" style="color:red;text-align:left;height:auto;width:auto;font-size: 8pt" text="Password do not match"></validatorcustom>
+                
+            </div>
+
+            <div class="clearfix mt40">
+                <button class="btn-small black" onClick="if(validators.validate('user', 'error', ''))ajax.doit('->saveUser', ajax.getFormValues('<?=ID('userAdd')?>'), '<?=$userID?>');">Save</button>
+            </div>
+    </div>
+
+  <script type="text/javascript"><![CDATA[
+
+    function valid(){
+      validators.clean('user','error');
+      validators.clean('dealer','error');
+      $('#<?=ID('country')?>').removeClass('error');
+//      if ($('#<?=ID('roleID')?>').val() == <?=USER_ROLE_DEALER?>)
+//        return validators.validate('user', 'error', '')&&validators.validate('user1', 'error', '')&&validators.validate('dealer', 'error', '');
+//      else
+//        return validators.validate('user', 'error', '')&&validators.validate('user1', 'error', '');
+    }
+
+  ]]></script>
+  
+  

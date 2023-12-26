@@ -1,0 +1,13 @@
+<div class="data-block">
+  <span class="glyphicon glyphicon-remove" onclick="popup.hide('<?=ID('noteAdd')?>')"></span>
+  <h2>Add/Edit Map</h2>
+  <div><hidden id="mapID"/></div>
+  <div><hidden id="noteID"/></div>
+  <div class="data pt30">
+    <memo id="note" rows="8" cols="35"></memo>
+    <validatorrequired id="valNote" controls="note" hiding="1" client="1" groups="note" class="validation-text"/>
+  </div>
+  <div class="clearfix mt20">
+    <button id="saveMapNote" class="btn-small black" onClick="if (validators.validate('note', 'error', ''))ajax.doit('->saveNote', ajax.getFormValues('<?=ID('noteAdd')?>'));">Save</button>
+  </div>
+</div>

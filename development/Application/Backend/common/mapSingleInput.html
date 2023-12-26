@@ -1,0 +1,37 @@
+<div class="data-block  ml20 mr20">
+  <span class="glyphicon glyphicon-remove" onclick="popup.hide('<?=ID('mapSingleInput')?>')"></span>
+
+  <h3 style="display: inline-block"><?=$title;?></h3>
+    <panel id="compareLink" tag="span" class="ml10">
+        <a href="javascript:void(0);" onclick="base=$('#<?=ID('reg_currValue')?>').val(); location.href = '/admin/map/compare?customerID=<?=$customerID;?>&title=<?=$title?>&key=<?=$keyTable?>&data='+base; " class="blue-link">compare</a>
+    </panel>
+  <div class="clearfix"></div>
+
+  <panel id="popupContainer" class="data pt0 mt0">
+    <div class="row ml5 mr5">
+      <!--<div class="value-block">-->
+        <!--<span class="name">Base</span>-->
+        <!--<span class="value"><?=$base;?></span>-->
+      <!--</div>-->
+      <div class="value-block">
+        <span class="name">Min</span>
+        <span class="value" ><?=$min;?></span>
+      </div>
+      <div class="value-block mr0">
+        <span class="name">Max</span>
+        <span class="value" ><?=$max;?></span>
+      </div>
+    </div>
+    <div class="row ml5">
+      <label>Current Value</label>
+      <textbox id="reg_currValue" type="text" class="pl5 pr5 mapSingleInput"/>
+    </div>
+    <div>
+      <hidden id="valKey"/>
+    </div>
+  </panel>
+  <panel id="saveButton" tag="div" class="clearfix mt25">
+    <button class="btn-small black mapSingleSave" onclick="ajax.doit('->saveMapSingleInput');">Save</button>
+    <hyperlink id="restoreOriginalLink" href="javascript:void(0)" onclick="ajax.doit('->restoreToOriginal', '<?=$valKey?>');" class="blue-link ml15 fr mt10">restore to original tune</hyperlink>
+  </panel>
+</div>

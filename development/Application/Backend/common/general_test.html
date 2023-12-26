@@ -1,0 +1,58 @@
+<body id="page">
+
+  <section class="main">
+    <header>
+      <div class="header-data clearfix">
+        <h1 class="logo"><a href="#"></a></h1>
+        <div class="user-info-control">
+          <input type="button" class="log-btn" onclick="ajax.doit('->logout');" value="out"/>
+          <div class="greeting-block">
+            Welcome,&nbsp;
+            <span class="user-name"><?=ClickBlocks\Utils\Strings::cut(htmlspecialchars($userName), 25, false);?></span>
+          </div>
+        </div>
+      </div>
+      <nav class="main">
+        <div class="links-block">
+          <a class="<?=$class1;?>" href="<?=$config->cms;?>/map/queue">Header 1 </a>
+          <a class="<?=$class2;?>" href="<?=$config->cms;?>/map/search">Header 2</a>
+          <a class="<?=$class3;?>" href="<?=$config->cms;?>/test">Header 3</a>
+        </div>
+      </nav>
+    </header>    
+    <div class="data-block pt20">
+      <?=$testform;?> 
+      
+<!-- <h1>Title 1</h1>
+ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+  quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+  consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+  cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat nonz
+  proident, sunt in culpa qui officia deserunt mollit anim id est laborum.  -->   
+
+    </div> 
+<!--       <h1> Title 2</h1> -->
+      <h2><?=ClickBlocks\Utils\Strings::cut(htmlspecialchars($userName), 25, false);?></h2>
+      <!-- Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<p/> -->
+<?php  $t=new \ClickBlocks\MVC\Backend\PageTest();  ?>
+
+<!-- <?= $t->testMethod(); ?> -->
+
+<p/>
+
+
+      <a href="/admin/customers?customerID=<?=$row['customerID'];?>&checkout=1">Check Out more</a>
+  </section>
+ 
+  <footer>
+    <div class="data-block">
+      2013 - <?php echo date("Y"); ?>. Vance &amp; Hines. All Rights Reserved.<span class="fr">GCID: <?php echo strtoupper(shell_exec('git rev-parse --short HEAD')); ?></span>
+    </div>
+  </footer>
+</body>

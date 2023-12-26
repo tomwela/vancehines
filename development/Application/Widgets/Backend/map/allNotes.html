@@ -1,0 +1,52 @@
+<div class="clearfix">
+  <h2 class="page-title">All Map Notes</h2>
+    <br /><small>Current Map ID: <?=$noteMapID?></small>
+    <br /><small>Customer ID: <?=$noteCustomerID?></small>
+
+  <div class="search-wrapper">
+    <textbox id="searchText" class="gradient-bg search-input" onclick="$(this).select();" placeholder="Search"/>
+    <hyperlink id="search" href="javascript:;" onclick="ajax.doit('<?=$class?>@<?=$uniqueID?>->search');"><div class="search-icon"></div></hyperlink>
+  </div>
+</div>
+
+<div class="panel-control">
+  <?if(count($rows) > 0) {?>
+  <p class="showing">
+    <?=$from;?> - <?=$to;?> of <?=$count;?>
+    | <span class="display">Display</span>
+  </p>
+  <customdropdownbox id="pageSize" options="php::array(10=>10,20=>20)" style="width:62px;"/>
+  <?}?>
+
+  <!--<div class="fr">-->
+     <!--<button class="btn-small black" onclick="ajax.doit('->showAddNote',<?=$noteMapID?>);">Create New</button>-->
+  <!--</div>-->
+
+</div>
+
+  <?if(!$rows) {?>
+
+      <div class="no-results-block">No Results</div>
+
+  <?} else {?>
+        <table class="tbl_info">
+            <?=$data; foreach ($rows as $k => $row){ ?>
+                <tr>
+                  <td width="150" class="<?=(abs($sortBy) == 1 ? 'gray': '');?>"><a href="javascript:void(0)" onclick="ajax.doit('->showEditNote', '<?=$row['noteID'];?>');"><?=\ClickBlocks\Utils\Strings::cut(htmlspecialchars($row['note']),30,false);?></a></td>
+                  <td width="145" class="<?=(abs($sortBy) == 2 ? 'gray': '');?>"><?=htmlspecialchars($row['createdDate']);?></td>
+                  <td width="100" class="<?=(abs($sortBy) == 3 ? 'gray': '');?>"><?=htmlspecialchars($row['userName']);?></td>
+                  <td width="50" class="<?=(abs($sortBy) == 4 ? 'gray': '');?>"><?=htmlspecialchars($row['mapID']);?></td>
+                  <td width="100">
+                    <div class="hide_links">
+                      <!--<a href="javascript:void(0)" onclick="ajax.doit('->showEditNote', '<?=$row['noteID'];?>');">Edit</a>-->
+                      <a href="javascript:void(0)" onclick="ajax.doit('->deleteNote', '<?=$row['noteID'];?>');" class="deactivate">Delete Note</a>
+                    </div>
+                  </td>
+                </tr>
+            <? } ?>
+        </table>
+        <div class="panel_paginator clearfix">
+          <navigator id="nav" class="paginator" template="<?=\ClickBlocks\Core\IO::dir('backend');?>/common/navigator.html" navSize="2" />
+        </div>
+  <? } ?>
+

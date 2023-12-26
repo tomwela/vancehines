@@ -1,0 +1,47 @@
+<panel id="mainform" masterpage="<?=\ClickBlocks\Core\IO::dir('backend');?>/common/general_search.html" class="data-block">
+  <widgetmapsearch id="mapSearch" />
+
+
+<script><![CDATA[
+    function jetColor(val, min, max) {
+      var cmin = Number(min);
+      var cmax = Number(max);
+      var c1   = Number(255);
+      var max4 = parseFloat( (cmax-cmin)/4 ).toFixed(2);
+      if (max4 == 0) {
+        max4 = 1;
+      };
+      var value = parseFloat( val-cmin ).toFixed(2);
+      if ( Number(value) < Number(max4) ) {
+        var r=Number(0);
+        var g=Number(0);
+        var b=parseFloat( c1+((255-c1)*value/max4) ).toFixed(2);
+        return [ Number(r).toFixed(0), Number(g).toFixed(0), Number(b).toFixed(0) ];
+      } else if ( Number(value) < parseFloat(2*max4) ) {
+        var r=Number(0);
+        var g=parseFloat( 255*(value-max4)/max4 ).toFixed(2);
+        var b=Number(255);
+        return [ Number(r).toFixed(0), Number(g).toFixed(0), Number(b).toFixed(0) ];
+      } else if ( Number(value) < parseFloat(3*max4) ) {
+        var r=parseFloat( 255*(value-2*max4)/max4 ).toFixed(2);
+        var g=Number(255);
+        var b=parseFloat( 255-r ).toFixed(2);
+        return [ Number(r).toFixed(0), Number(g).toFixed(0), Number(b).toFixed(0) ];
+      } else if ( Number(value) < Number(cmax) ) {
+        var r=Number(255);
+        var g=parseFloat( 255-255*(value-3*max4)/max4 ).toFixed(2);
+        var b=Number(0);
+        return [ Number(r).toFixed(0), Number(g).toFixed(0), Number(b).toFixed(0) ];
+      } else {
+        var r=Number(255);
+        var g=Number(0);
+        var b=Number(0);
+        return [ Number(r).toFixed(0), Number(g).toFixed(0), Number(b).toFixed(0) ];
+      }
+      if (r<0) {r=Number(0);};
+      if (g<0) {g=Number(0);};
+      if (b<0) {b=Number(0);};
+      return [ Number(r).toFixed(0), Number(g).toFixed(0), Number(b).toFixed(0) ];
+    }
+]]></script>
+</panel>

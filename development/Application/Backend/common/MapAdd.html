@@ -1,0 +1,100 @@
+<div class="data-block">
+  <span class="glyphicon glyphicon-remove" onclick="popup.hide('<?=ID('MapAdd')?>')"></span>
+  
+  <h2>Edit Map</h2>
+  <div class="data pt30">
+    <table class="merged-table big">
+      <tr>
+          <td>
+            <label>Name&nbsp;map</label>
+          </td>
+          <td>
+            <textbox id="nameMap" maxlength="25" class="gradient-bg small"/>
+            <validatorrequired id="valnameMap" controls="nameMap" hiding="1" client="1" groups="map" class="validation-text"/>
+          </td>
+      </tr>
+      <tr>
+          <td>
+            <label>Description</label>
+          </td>
+          <td>
+            <textbox id="description" maxlength="25" class="gradient-bg small"/>
+          </td>
+      </tr>
+      <tr>
+          <td>
+            <label>Make</label>
+          </td>
+          <td>
+            <textbox id="make" maxlength="200" class="gradient-bg small"/>
+            <validatorrequired id="valmake" controls="make" hiding="1" client="1" groups="map" class="validation-text"/>
+          </td>
+      </tr>
+      <tr>
+          <td>
+            <label>Model</label>
+          </td>
+          <td>
+            <textbox id="model" maxlength="200" class="gradient-bg small"/>
+            <validatorrequired id="valmodel" controls="model" hiding="1" client="1" groups="map" class="validation-text"/>
+          </td>
+      </tr>
+      <tr>
+          <td>
+            <label>Year</label>
+          </td>
+          <td>
+            <textbox id="year" maxlength="200" class="gradient-bg small"/>
+            <validatorrequired id="valyear" controls="year" hiding="1" client="1" groups="map" class="validation-text"/>
+          </td>
+      </tr>
+      <tr>
+          <td>
+            <label>Exhaust Manufacturer</label>
+          </td>
+          <td>
+            <textbox id="eManufacturer" maxlength="200" class="gradient-bg small"/>
+          </td>
+      </tr>
+      <tr>
+          <td>
+            <label>Exhaust Name</label>
+          </td>
+          <td>
+            <textbox id="eName" maxlength="200" class="gradient-bg small"/>
+          </td>
+      </tr>
+      <tr>
+          <td>
+            <label>Baffle Type</label>
+          </td>
+          <td>
+            <textbox id="baffleType" maxlength="200" class="gradient-bg small"/>
+          </td>
+      </tr>
+      <tr>
+          <td>
+            <label>Engine Size</label>
+          </td>
+          <td>
+            <textbox id="eSize" maxlength="200" class="gradient-bg small"/>
+          </td>
+      </tr>
+    </table>
+  </div>
+  <div class="clearfix mt40">
+    <button class="btn-small black" onClick="if(validators.validate('map', 'error', ''))ajax.doit('->saveMap', ajax.getFormValues('<?=ID('MapAdd')?>'), '<?=$userID?>');">Save</button>
+  </div>
+</div>
+  <script type="text/javascript"><![CDATA[
+
+    function valid(){
+      validators.clean('map','error');
+      $('#<?=ID('country')?>').removeClass('error');
+      if ($('#<?=ID('roleID')?>').val() == <?=USER_ROLE_DEALER?>)
+        return validators.validate('map', 'error', '');
+      else
+        return validators.validate('map', 'error', '');
+    }
+
+  ]]></script>

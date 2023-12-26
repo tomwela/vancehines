@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Language" content="vi" />
+<meta http-equiv="imagetoolbar" content="false" />
+<meta name="language" content="vietnamese" />
+<meta name="title" content="RESTful Webservice Testing Tool" />
+<meta name="author" content="Saritasa LLC - http://www.saritasa.com/" />
+<meta name="designer" content="Saritasa LLC - http://www.saritasa.com/" />
+<meta name="copyright" content="Saritasa LLC" />
+<meta name="abstract" content="RESTful webservice" />
+<meta name="description" content="RESTful Webservice Testing Tool" />
+<meta name="keywords" content="Webservice API Client, API Tools, Poster" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<title>RESTful webservice</title>
+<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
+<link type="text/css" rel="stylesheet" href="css/bootstrap-responsive.min.css" />
+<link type="text/css" rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+	<div class="navbar navbar-inverse navbar-fixed-top" id="header">
+		<div class="navbar-inner">
+			<div class="container">
+				<span class="brand">Webservice API Tool</span>
+				<div class="nav-collapse collapse">
+					<ul class="nav">
+						<li><a href="javascript:;" class="create-new">New</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span3 well" id="lefter"></div>
+			<div class="span9 well" id="center">
+				<div id="form-create-wrapper" class="hide">
+					<form class="form-horizontal">
+						<div class="control-group">
+							<div class="controls">
+								<strong>Create/Update service</strong>	
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">Service name</label>
+							<div class="controls">
+								<input class="input-medium" type="text" name="serviceName" placeholder="Login system"/>	
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">Service code</label>
+							<div class="controls">
+								<input class="input-medium" type="text" name="serviceCode" placeholder="/login"/>	
+							</div>
+						</div>
+						<div class="control-group">
+							<div class="controls">
+								<label class="checkbox">
+		                  			<input type="checkbox" name="serviceSKey"> Has sKey
+		                		</label>
+	                		</div>
+						</div>
+						<div id="field-0" class="field hide">
+							<label class="control-label label">Field {NUMBER}</label>
+							<div class="controls">
+								<div style="float:left; margin-right:10px;">
+									<label>Name: </label>
+									<input class="input-small field-label" type="text" placeholder="Field name"/>
+								</div>
+								<div style="float:left; margin-right:10px;">
+									<label>Code: </label>
+									<input class="input-small field-code" type="text" placeholder="fieldCode"/>
+								</div>
+								<div style="float:left; margin-right:10px;">
+									<label>Type: </label>
+									<select class="input-small field-type">
+										<option value="text">Text</option>
+										<option value="textarea">Textarea</option>
+										<option value="file">File</option>
+										<option value="select">Dropdown List</option>
+									</select>
+									<button type="button" class="btn delete">Delete field</button>
+									<button type="button" class="btn add">Add field</button>
+								</div>
+								<div class="clearfix"></div>
+								<div style="margin-top:10px;">
+									<textarea rows="3" class="input-xlarge field-value"></textarea>
+								</div>
+							</div>
+						</div>
+						<div class="control-group">
+							<div class="controls">
+								<button type="button" class="btn cancel-service">Cancel</button>
+								<button type="button" class="btn save-service">Save</button>
+							</div>
+						</div>
+					</form>
+				</div>
+				<form id="service-form" class="form-horizontal" action="" method="POST" enctype="multipart/form-data" target="_blank">				
+					<div class="control-group persistence">
+						<div class="controls">
+							<strong>Service name [/login]</strong>
+						</div>
+					</div>
+					<div class="control-group persistence">
+						<div class="controls">
+							<button type="reset" class="btn">Reset</button>
+							<button type="submit" class="btn">Submit</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<script src="js/jquery.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/json2.js"></script>
+	<script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<div class="data-block ml20 mr20" >
+  <span class="glyphicon glyphicon-remove" onclick="popup.hide('<?=ID('mapSSInput')?>')"></span>
+    <span id="tableType" name="matrix"></span>
+
+    <h3 style="display: inline-block"><?=$title;?></h3>
+  <panel id="compareLink" tag="span" class="ml10">
+      <a href="javascript:void(0)" onclick="base=$('#<?=ID('reg_currValue')?>').val(); location.href = '/admin/map/compare?customerID=<?=$customerID;?>&title=<?=$title?>&key=<?=$keyTable?>&data=<?=$rows?>'+base; " class="blue-link">compare</a>
+  </panel>
+  <div class="clear"></div>
+
+
+  <panel id="MinMax" tag="div" class="ml10 mb10">
+    <div class="value-block">
+      <span class="name">Min:</span>
+      <span class="value" id="minValue"><?=$min;?></span>
+    </div>
+    <div class="value-block mr0">
+      <span class="name">Max:</span>
+      <span class="value" id="maxValue"><?=$max;?></span>
+    </div>
+  </panel>
+
+
+
+  <!--<? //if ($title == 'VE Front Cylinder' || $title == 'VE Rear Cylinder' || $title == 'Air Fuel Ratio') { ?>-->
+
+    <panel id="shiftClick" tag="div" class="clearfix mt15 ml20">
+    <div class="row">
+
+
+        <table><tr><td>
+
+            <div class="btn-group" role="group">
+                <button type="button" value="add"      class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Addition" onclick="$('.btn-group :button').siblings().removeClass('active');$(this).addClass('active');">+</button>
+                <button type="button" value="subtract" class="btn btn-default"        onclick="$('.btn-group :button').siblings().removeClass('active');$(this).addClass('active');">&minus;</button>
+                <button type="button" value="multiply" class="btn btn-default active" onclick="$('.btn-group :button').siblings().removeClass('active');$(this).addClass('active');">&times;</button>
+                <button type="button" value="divide"   class="btn btn-default"        onclick="$('.btn-group :button').siblings().removeClass('active');$(this).addClass('active');">&divide;</button>
+                <button type="button" value="equal"    class="btn btn-default"        onclick="$('.btn-group :button').siblings().removeClass('active');$(this).addClass('active');">=</button>
+            </div><br />
+            <textbox id="shiftClickInput" type="text" size="6" class="form-control inputWithButton" placeholder="Number"/><br />
+
+        </td>
+        <td>
+
+            <span class="bg-warning">
+                <small>
+                    <ul><strong>To Apply:</strong>
+                        <li>Hold the Shift Key</li>
+                        <li>then, Left Mouse Click On Individual Cells</li>
+                    </ul>
+                </small>
+            </span>
+
+        </td></tr></table>
+
+    </div>
+    </panel>
+
+  <!--<?//}?>-->
+
+
+
+  <br />
+  <panel id="popupContainer" class="data pt25" >
+    <div class="graph-table-wrapper ml40">
+      <center><span id="message" class="pb10"></span>
+          <textlabel tag="div" id="xHeader" class="desc-for-table top bold pb20">Throttle Position</textlabel>
+      </center>
+
+      <table class="graph-table">
+        <tr>
+          <th>&nbsp;</th>
+          <?foreach($arrMatrixCol as $col){?>
+          <th><?=$col;?></th>
+          <?}?>
+        </tr>
+        <?
+        foreach($arrMatrixRow as $row){ ?>
+          <tr>
+            <td><?=$row?></td>
+          <? foreach($arrMatrixCol as $col){ ?>
+            <td class="ssInputDataTd" onclick="$(this).find('.ssInputData').select();">
+              <input type="hidden" name="mapSSInputKeys_<?=$col;?>[]" value="<?= $row; ?>"/>
+              <input name="mapSSInputValues_<?=$col;?>[]" value="<?= $rows[$col][$row]; ?>" type="text" onkeyup="<?=$onKeyUpScript;?>;" class="ssInputData" maxlength="<?=$maxLength;?>"/>
+            </td>
+          <? } ?>
+          </tr>
+        <? } ?>
+      </table>
+      <div class="text-right"><small><em><code><?=$gridSize;?></code></em></small></div>
+
+
+      <div><hidden id="valKey"/></div>
+      <div><hidden id="valCols"/></div>
+      <textlabel tag="div" id="yHeader" class="desc-for-table bottom bold">RPM</textlabel>
+      <? if ($title == 'Throttle Progressivity') { ?>
+      <br/>
+      <textlabel tag="div" id="xHeaderThrProg" class="desc-for-table top bold">Throttle Position</textlabel>
+      <table class="graph-table">
+        <tr>
+          <th>&nbsp;</th>
+          <?foreach($arrMatrixColThrProg as $col){?>
+          <th><?=$col;?></th>
+          <?}?>
+        </tr>
+        <?
+        foreach($arrMatrixRowThrProg as $row){ ?>
+          <tr>
+            <td><?=$row?></td>
+          <? foreach($arrMatrixColThrProg as $col){ ?>
+            <td class="ssInputDataTd" onclick="$(this).find('.ssInputDataThrProg').select();">
+              <input type="hidden" name="mapSSInputKeysThrProg_<?=$col;?>[]" value="<?= $row; ?>"/>
+              <input name="mapSSInputValuesThrProg_<?=$col;?>[]" value="<?= $rowsThrProg[$col][$row]; ?>" type="text" onkeyup="<?=$onKeyUpScript;?>;" class="ssInputDataThrProg" maxlength="<?=$maxLength;?>"/>
+            </td>
+          <? } ?>
+          </tr>
+        <? } ?>
+      </table>
+      <div><hidden id="valColsThrProg"/></div>
+      <textlabel tag="div" id="yHeaderThrProg" class="desc-for-table bottom bold">RPM</textlabel>
+      <? } ?>
+    </div>
+  </panel>
+
+   <panel id="saveButton" tag="div" class="clearfix mt40 ml20">
+    <button class="btn-small black" onclick="$('.ssInputData').removeClass('error');$('.ssInputDataThrProg').removeClass('error');ajax.doit('->saveMapSSInput', ajax.getFormValues());">Save</button>
+
+    <? if ($title == 'Air Fuel Ratio' || $title == 'Rear Cylinder Spark Adv' || $title == 'Front Cylinder Spark Adv' || $title == 'VE Front Cylinder' || $title == 'VE Rear Cylinder'|| $title == 'Primary Throttle Blade Control' || $title == 'Secondary Throttle Blade Control') { ?>
+        <button class="btn-small gray ml15" onclick="deleteInputValues();">Clear Values</button>
+
+        <span class="ml25">
+          <textbox id="copyFromMapID" name="copyFromMapID" type="text" class="form-control inputWithButton" placeholder="Map ID"/>
+          <button class="btn-small gray" onclick="ajax.doit('->copyTableFromMapID', '<?=$keyTable?>', $('input[name=copyFromMapID]').val() )">Copy Map</button>
+        </span>
+
+    <?}?>
+
+    <? if ($DBTableName == 'ThrtottleProgrsivity' || $DBTableName == 'ThrtottleProgrsivity2' || $title == 'Primary Throttle Blade Control' || $title == 'Secondary Throttle Blade Control') { ?>
+      <button class="btn-small gray ml10" onclick="inputValuesLowerThanColumnValues();">Validate</button>
+    <?}?>
+
+
+    <hyperlink id="restoreOriginalLink" href="javascript:void(0)" onclick="ajax.doit('->restoreToOriginal', '<?=$keyTable?>');" class="blue-link fr mt10">restore to original tune <?=$keyTable?></hyperlink>
+   </panel>
+</div>

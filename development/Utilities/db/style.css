@@ -1,0 +1,28 @@
+body {
+      
+}
+
+.msg {
+  width: 600px;
+  background-color: #EAF2D3;
+  color: black;
+  padding: 10px;
+  margin-bottom: 20px;
+  font-size: 12px;
+}
+
+.msg .error {
+  font-weight: bold;
+  color: red;
+}
+
+.list {
+  border: 1px solid #ccc;
+  border-collapse: collapse;
+}
+
+.list td {
+  padding: 0px 5px;
+  border: 1px solid #ccc;
+
+}

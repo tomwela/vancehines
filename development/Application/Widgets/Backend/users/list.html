@@ -1,0 +1,100 @@
+
+
+<div class="clearfix">
+  <h2 class="page-title">Manage Users</h2>
+	<div class="search-wrapper">
+  		<input type="text" class="gradient-bg search-input" title="Search" value="<?=$search?:'Search'?>" onclick="if(this.value=='Search')  this.value = '';" onblur="setTimeout(function(){this.value = 'Search';}, 100);" onkeypress="clickSearch(event);"/>
+  		<hyperlink id="search" href="javascript:void(0);"><div class="search-icon"></div></hyperlink>
+  </div>
+</div>
+
+<div class="panel-control clearfix">
+    <p class="showing">
+      <?=$from;?> - <?=$to;?> of <?=$count;?> | <span class="display">Display</span>
+    </p>&nbsp;
+
+    <? if($rows) {?>
+        <customdropdownbox id="pageSize" options="php::array(10=>10,20=>20)" style="width:57px;"/>
+
+        <? if ($currentUser->role == 'admin' || $currentUser->role == 'csrManager'){ ?>
+            <div class="fr">
+                <span class="selected-counter"></span>
+                <button class="btn btn-danger btn-sm" onclick="var a = getChecked(); if(a.length) ajax.doit('->deleteGroup', a, 1);">Delete</button>
+                <button class="btn btn-primary btn-outline btn-sm" onclick="ajax.doit('->userAdd');">Create New</button>
+            </div>
+        <?}?>
+
+    <? } ?>
+</div>
+
+<div class="clear"></div>
+<table class="tbl_info">
+    <?=$data; foreach ($rows as $k => $row){ ?>
+    <tr>
+      <td class="<?=(abs($sortBy) == 1 ? 'gray': '');?>" style="cursor: pointer;">
+
+          <? if ($currentUser->role == 'admin' || $currentUser->role == 'csrManager'){ ?>
+            <a href="javascript:void(0)" class="custom-checkbox numeric" userid="<?=$row['userID']?>"></a>
+          <?}?>
+
+         <? if (count($row['userID'])) { ?><span id="arr_<?=$uniqueID;?>_<?=$k;?>" ></span><?}?>
+                <?=ClickBlocks\Utils\Strings::cut(htmlspecialchars($row['firstName']), 70, false);?>, <?=ClickBlocks\Utils\Strings::cut(htmlspecialchars($row['lastName']), 70, false);?>
+
+      </td>
+      <td class="<?=(abs($sortBy) == 2 ? 'gray': '');?>" style="cursor: pointer; " ><?=htmlspecialchars(date("m/d/Y",strtotime($row['created'])));?></td>
+      <td class="<?=(abs($sortBy) == 3 ? 'gray': '');?>" style="cursor: pointer;" ><?=htmlspecialchars(date("h:i a",strtotime($row['created'])));?></td>
+      <td class="<?=(abs($sortBy) == 4 ? 'gray': '');?>" style="cursor: pointer;" ><?=htmlspecialchars($row['email']);?></td>
+
+      <td>
+        <?if ($currentUser->role == 'admin' || $currentUser->role == 'csrManager'){ ?>
+            <div class="hide_links">
+              <a href="javascript:void(0)" onclick="ajax.doit('->userEdit', '<?=$row['userID']?>');">Edit</a>
+
+              <? if($row['role'] != 'admin'){ // dont allow deletion of "admin" roles from here ?>
+                <a href="javascript:void(0)" onclick="ajax.doit('->deleteUser', '<?=$row['userID']?>',1);" class="deactivate">Delete</a>
+              <?}?>
+            </div>
+        <?}?>
+      </td>
+    </tr>
+    <? }//foreach ?>
+</table>
+
+<div class="panel_paginator clearfix">
+
+<!--
+  <p class="showing">
+    <?=$from;?> - <?=$to;?> of <?=$count;?> | <span class="display"> Display</span>
+  </p>
+-->
+
+
+  <!-- customdropdownbox-->
+  <!-- navigator-->
+  <?if($rows) {?>
+  <customdropdownbox id="pageSize1" options="php::array(10=>10,20=>20)" style="width:62px;"/>
+  <navigator id="nav" class="paginator" template="<?=\ClickBlocks\Core\IO::dir('backend');?>/common/navigator.html" navSize="1"  />
+
+<? } ?>
+</div>
+
+
+
+
+
+
+<script type="text/javascript">function clickSearch(e){if ((e || event).keyCode == 13) ajax.doit('<?=$class?>@<?=$uniqueID?>->search', $('.search-input').val());}</script>
+<script><![CDATA[
+  function getChecked(){
+    var a=[];
+    $('.numeric.custom-checkbox').each(function(){
+      if($(this).hasClass('checked'))
+        a.push($(this).attr('userid'));
+    });
+    return a;
+  }
+]]></script>
+
+
+
+

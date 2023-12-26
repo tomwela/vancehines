@@ -1,0 +1,53 @@
+<body id="page">
+  <!-- users   -->
+  <!--<popup id="userAdd" template="<?=\ClickBlocks\Core\IO::dir('backend');?>/common/UserAdd.html" style="display:none;z-index:100" visible="1"/>-->
+  
+  
+  <!-- search -->
+  <!--<popup id="MapAdd" template="<?=\ClickBlocks\Core\IO::dir('backend');?>/common/MapAdd.html" style="display:none;z-index:100" visible="1"/>-->
+  
+  <!-- users, customers   -->
+  <popup id="msg" template="<?=\ClickBlocks\Core\IO::dir('backend');?>/common/popup.html" style="display:none;"/>
+  
+  <!-- search -->
+  <!--<popup id="msgDelete" template="<?=\ClickBlocks\Core\IO::dir('backend');?>/common/popupDelete.html" style="display:none;"/>-->
+  
+  <!-- customers, search -->
+  <popup id="mapSingleInput" template="<?=\ClickBlocks\Core\IO::dir('backend');?>/common/mapSingleInput.html" style="display:none;z-index:100;"/>
+  <popup id="mapMultiInput" template="<?=\ClickBlocks\Core\IO::dir('backend');?>/common/mapMultiInput.html" style="display:none;z-index:100;"/>
+  <popup id="mapSSInput" class="popup big" template="<?=\ClickBlocks\Core\IO::dir('backend');?>/common/mapSSInput.html" style="display:none;z-index:100;"/>
+  
+  <popup id="notes" class="popupNote big" template="<?=\ClickBlocks\Core\IO::dir('backend');?>/common/notes.html" style="display:none;z-index:100;"/>
+  <popup id="noteAdd" class="popup" template="<?=\ClickBlocks\Core\IO::dir('backend');?>/common/noteAdd.html" style="display:none;z-index:200;"/>
+  <popup id="sendNote" class="popup" template="<?=\ClickBlocks\Core\IO::dir('backend');?>/common/sendNote.html" style="display:none;z-index:200;"/>
+   <popup id="sendNotetest" class="popup" template="<?=\ClickBlocks\Core\IO::dir('backend');?>/common/sendNote2.html" style="display:none;z-index:200;"/>
+  <section class="main">
+    <header>
+      <div class="header-data clearfix">
+        <h1 class="logo"><a href="#"></a></h1>
+        <div class="user-info-control">
+          <input type="button" class="log-btn" onclick="ajax.doit('->logout');" value="Logout"/>
+          <div class="greeting-block">
+            Welcome,&nbsp;
+            <span class="user-name"><?=ClickBlocks\Utils\Strings::cut(htmlspecialchars($userName), 25, false);?></span>
+          </div>
+        </div>
+      </div>
+      <nav class="main">
+        <div class="links-block">
+          <a class="<?=$class1;?>" href="<?=$config->cms;?>/map/queue">Map Queue</a>
+          <a class="<?=$class2;?>" href="<?=$config->cms;?>/map/search">Map Search</a>
+          <a class="<?=$class3;?>" href="<?=$config->cms;?>/users">Manage Users</a>
+        </div>
+      </nav>
+    </header>    
+    <div class="data-block pt20">
+      <?=$mainform;?>    
+    </div>       
+  </section>
+  <footer>
+    <div class="data-block">
+      2013 - <?php echo date("Y"); ?>. Vance &amp; Hines. All Rights Reserved.<span class="fr">GCID: <?php echo strtoupper(shell_exec('git rev-parse --short HEAD')); ?></span>
+    </div>
+  </footer>
+</body>
